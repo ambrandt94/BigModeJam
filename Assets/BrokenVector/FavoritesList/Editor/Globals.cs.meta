@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: c2a38963ce0b7a54aa863de9f4786f52
+timeCreated: 1492161743
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 72293
+  packageName: Favorites List
+  packageVersion: 1.2.8
+  assetPath: Assets/BrokenVector/FavoritesList/Editor/Globals.cs
+  uploadId: 364170

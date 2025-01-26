@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: ee75b677c3d50d9499d006e69060101e
+timeCreated: 1515318859
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 72293
+  packageName: Favorites List
+  packageVersion: 1.2.8
+  assetPath: Assets/BrokenVector/FavoritesList/Editor/ListDataInspector.cs
+  uploadId: 364170

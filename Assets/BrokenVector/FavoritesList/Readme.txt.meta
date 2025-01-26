@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9f435f6fd264bfe48835f4a4d46cefed
+timeCreated: 1474749482
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 72293
+  packageName: Favorites List
+  packageVersion: 1.2.8
+  assetPath: Assets/BrokenVector/FavoritesList/Readme.txt
+  uploadId: 364170

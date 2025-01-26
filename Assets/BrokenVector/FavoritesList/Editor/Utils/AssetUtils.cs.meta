@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: d1ace40ffa7c41f43998bcc839bc0ad6
+timeCreated: 1494927352
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 72293
+  packageName: Favorites List
+  packageVersion: 1.2.8
+  assetPath: Assets/BrokenVector/FavoritesList/Editor/Utils/AssetUtils.cs
+  uploadId: 364170

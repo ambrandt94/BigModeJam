@@ -1,0 +1,3 @@
+[submodule "Assets/ChainLink/Packages/ChainLink.Photon"]
+	path = Assets/ChainLink/Packages/ChainLink.Photon
+	url = https://github.com/ambrandt94/ChainLink.Photon.git

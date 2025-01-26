@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fc306e5a9238247408471239d17ae50f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 72293
+  packageName: Favorites List
+  packageVersion: 1.2.8
+  assetPath: Assets/BrokenVector/FavoritesList/Editor/ListData.asset
+  uploadId: 364170
