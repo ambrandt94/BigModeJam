@@ -5,11 +5,14 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/ChainLink/Packages/ChainLink.Photon/Scenes/SampleScene.unity
     guid: 119b6d8467fa96d4ebbd451351c299a5
-  - enabled: 1
+  - enabled: 0
     path: Assets/ChainLink/Packages/ChainLink.Photon/Scenes/Game.unity
     guid: dc2f209b8b2790b4092d8dc719e9c80a
+  - enabled: 1
+    path: Assets/DestroyIt/Demos (safe to delete)/Chain Destruction Scene.unity
+    guid: 445d4a440920274428fe036e6eef7501
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
