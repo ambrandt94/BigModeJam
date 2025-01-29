@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e05081af72f3d64fb3bb3b87c66ff55, type: 3}
-  m_Name: Speed Up x2
+  m_Name: Slow Down
   m_EditorClassIdentifier: 
-  spellName: Speed Up x2
+  spellName: Slow Down
   manaCost: 0
   cooldown: 0
   effectPrefab: {fileID: 0}
+  effectPrefabRemainsChild: 0
+  hasDuration: 0
   spellEffects:
-  - {fileID: 11400000, guid: 88bcd69fbc299d744a960033dfc1f466, type: 2}
-  - {fileID: 11400000, guid: 727c8f7265a3f994a95bae04d9620534, type: 2}
+  - {fileID: 11400000, guid: 3d37c2eb8a6e78142ae6e9bf4441c9ba, type: 2}
+  - {fileID: 11400000, guid: 58432bd912d7aef4790fc8d2f3ad6043, type: 2}
   radius: 3
   canHitSelf: 1
   canHitOthers: 1

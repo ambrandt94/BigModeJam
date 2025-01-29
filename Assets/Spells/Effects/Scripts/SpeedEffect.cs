@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SpellEffects/SpeedEffect")]
 public class SpeedEffect : ScriptableObject, ISpellEffect
 {
-    public float speedChange; 
+    public bool positiveSpeedChange;     
 
     private MoveBehaviour moveBehaviour;
     private FlyBehaviour flyBehaviour;
@@ -19,10 +19,18 @@ public class SpeedEffect : ScriptableObject, ISpellEffect
             moveBehaviour = target.gameObject.GetComponent<MoveBehaviour>();
         }
 
+        if (positiveSpeedChange)
+        {
+            moveBehaviour.IncreaseSpeedPhase();
+        }      
+        else
+        {
+            moveBehaviour.DecreaseSpeedPhase();
+        }
        
-        moveBehaviour.walkSpeed  = moveBehaviour.walkSpeed * speedChange;
-        moveBehaviour.runSpeed = moveBehaviour.runSpeed * speedChange;
-        moveBehaviour.sprintSpeed = moveBehaviour.sprintSpeed * speedChange;
+        //moveBehaviour.walkSpeed  = moveBehaviour.walkSpeed * speedChange;
+        //moveBehaviour.runSpeed = moveBehaviour.runSpeed * speedChange;
+        //moveBehaviour.sprintSpeed = moveBehaviour.sprintSpeed * speedChange;
 
         if (flyBehaviour == null) {
             if (target.gameObject.GetComponent<FlyBehaviour>() == null)
@@ -30,7 +38,7 @@ public class SpeedEffect : ScriptableObject, ISpellEffect
 
             flyBehaviour = target.gameObject.GetComponent<FlyBehaviour>();
         }
-            flyBehaviour.flySpeed = flyBehaviour.flySpeed * speedChange;
+            flyBehaviour.flySpeed = flyBehaviour.flySpeed * 1.1f;
 
         
       
