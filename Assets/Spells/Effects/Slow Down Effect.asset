@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20820abf76c50cc4a90ef3f902d668bb, type: 3}
-  m_Name: Slow Down x2 Effect
+  m_Name: Slow Down Effect
   m_EditorClassIdentifier: 
-  speedChange: 0.5
+  positiveSpeedChange: 0

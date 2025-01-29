@@ -125,7 +125,6 @@ public class FlyBehaviour : GenericBehaviour
 
     Vector3 Rotating(float horizontal, float vertical)
     {
-
         if (isBouncing)
         {
             // During bounce, maintain velocity direction for rotation.
@@ -138,39 +137,40 @@ public class FlyBehaviour : GenericBehaviour
             behaviourManager.SetLastDirection(bounceDirection);
             behaviourManager.Repositioning();
 
-            // Return current direction to maintain movement.
             return bounceDirection;
         }
         else
         {
-            // Get camera's forward direction without vertical influence.
-            Vector3 forward = behaviourManager.playerCamera.TransformDirection(Vector3.forward);
-            forward.y = 0; // Lock Y-axis movement to prevent tilting
-            forward.Normalize();
+            // Get the camera's full forward direction (including up/down movement)
+            Vector3 cameraForward = behaviourManager.playerCamera.forward;
+            cameraForward.Normalize(); // Ensure a normalized vector
 
-            // Compute right direction to allow horizontal movement.
-            Vector3 right = new Vector3(forward.z, 0, -forward.x);
-            Vector3 targetDirection = forward * vertical + right * horizontal;
+            // Mouse now controls full up/down rotation
+            Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
+
+            // Smooth rotation using Slerp
+            Quaternion smoothRotation = Quaternion.Slerp(
+                rb.rotation,
+                targetRotation,
+                Time.deltaTime * 10f // Adjust smoothness
+            );
+
+            rb.MoveRotation(smoothRotation);
+
+            // Handle movement including vertical input (space/up and ctrl/down)
+            Vector3 right = behaviourManager.playerCamera.right;
+            float flyVertical = Input.GetAxis("Jump") - Input.GetAxis("Crouch"); // Space = 1, Ctrl = -1, Neutral = 0
+
+            Vector3 targetDirection = (cameraForward * vertical) + (right * horizontal) + (Vector3.up * flyVertical);
+            targetDirection.Normalize(); // Prevents increased speed from diagonal movement
 
             if (behaviourManager.IsMoving() && targetDirection != Vector3.zero)
             {
-                // Get current rotation and smoothly transition to the target rotation.
-                Quaternion currentRotation = rb.rotation;
-                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-
-                // Preserve current Y rotation for smoothness
-                Quaternion smoothRotation = Quaternion.Slerp(
-                    currentRotation,
-                    Quaternion.Euler(0, targetRotation.eulerAngles.y, 0), // Lock to Y-axis rotation only
-                    Time.deltaTime * 5f // Adjust smoothing speed
-                );
-
-                rb.MoveRotation(smoothRotation);
                 behaviourManager.SetLastDirection(targetDirection);
             }
 
             // If idle, keep last known good rotation.
-            if (!(Mathf.Abs(horizontal) > 0.2f || Mathf.Abs(vertical) > 0.2f))
+            if (!(Mathf.Abs(horizontal) > 0.2f || Mathf.Abs(vertical) > 0.2f || Mathf.Abs(flyVertical) > 0.2f))
             {
                 behaviourManager.Repositioning();
                 col.direction = 1;
@@ -183,6 +183,8 @@ public class FlyBehaviour : GenericBehaviour
             return targetDirection;
         }
     }
+
+
     Vector3 lastReflectedDirection = Vector3.zero;
     void OnCollisionEnter(Collision collision)
     {
