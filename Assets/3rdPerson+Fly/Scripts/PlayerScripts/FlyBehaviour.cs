@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using UnityEngine;
 
 // FlyBehaviour inherits from GenericBehaviour. This class corresponds to the flying behaviour.
@@ -143,19 +143,33 @@ public class FlyBehaviour : GenericBehaviour
         }
         else
         {
+            // Get camera's forward direction without vertical influence.
+            Vector3 forward = behaviourManager.playerCamera.TransformDirection(Vector3.forward);
+            forward.y = 0; // Lock Y-axis movement to prevent tilting
+            forward.Normalize();
 
-            Vector3 forward = behaviourManager.playerCamera.TransformDirection(Vector3.forward).normalized;
+            // Compute right direction to allow horizontal movement.
             Vector3 right = new Vector3(forward.z, 0, -forward.x);
             Vector3 targetDirection = forward * vertical + right * horizontal;
 
             if (behaviourManager.IsMoving() && targetDirection != Vector3.zero)
             {
+                // Get current rotation and smoothly transition to the target rotation.
+                Quaternion currentRotation = rb.rotation;
                 Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-                Quaternion newRotation = Quaternion.Slerp(rb.rotation, targetRotation, behaviourManager.turnSmoothing);
-                rb.MoveRotation(newRotation);
+
+                // Preserve current Y rotation for smoothness
+                Quaternion smoothRotation = Quaternion.Slerp(
+                    currentRotation,
+                    Quaternion.Euler(0, targetRotation.eulerAngles.y, 0), // Lock to Y-axis rotation only
+                    Time.deltaTime * 5f // Adjust smoothing speed
+                );
+
+                rb.MoveRotation(smoothRotation);
                 behaviourManager.SetLastDirection(targetDirection);
             }
 
+            // If idle, keep last known good rotation.
             if (!(Mathf.Abs(horizontal) > 0.2f || Mathf.Abs(vertical) > 0.2f))
             {
                 behaviourManager.Repositioning();
