@@ -127,49 +127,45 @@ public class FlyBehaviour : GenericBehaviour
     {
         if (isBouncing)
         {
-            // During bounce, maintain velocity direction for rotation.
+            // Maintain velocity direction for rotation during bounce
             Vector3 bounceDirection = lastReflectedDirection;
-
-            // Align rotation with bounce direction.
             Quaternion bounceRotation = Quaternion.LookRotation(bounceDirection);
             Quaternion newRotation = Quaternion.Slerp(rb.rotation, bounceRotation, behaviourManager.turnSmoothing);
             rb.MoveRotation(newRotation);
             behaviourManager.SetLastDirection(bounceDirection);
             behaviourManager.Repositioning();
-
             return bounceDirection;
         }
         else
         {
-            // Get the camera's full forward direction (including up/down movement)
-            Vector3 cameraForward = behaviourManager.playerCamera.forward;
-            cameraForward.Normalize(); // Ensure a normalized vector
+            // Get full camera movement directions
+            Vector3 forward = behaviourManager.playerCamera.TransformDirection(Vector3.forward); // Forward in full 3D space
+            Vector3 right = behaviourManager.playerCamera.TransformDirection(Vector3.right); // Strafing direction
+            Vector3 up = behaviourManager.playerCamera.TransformDirection(Vector3.up); // Vertical movement
 
-            // Mouse now controls full up/down rotation
-            Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
-
-            // Smooth rotation using Slerp
-            Quaternion smoothRotation = Quaternion.Slerp(
-                rb.rotation,
-                targetRotation,
-                Time.deltaTime * 10f // Adjust smoothness
-            );
-
-            rb.MoveRotation(smoothRotation);
-
-            // Handle movement including vertical input (space/up and ctrl/down)
-            Vector3 right = behaviourManager.playerCamera.right;
+            // Allow movement in full 3D space using WASD + Space/Ctrl
             float flyVertical = Input.GetAxis("Jump") - Input.GetAxis("Crouch"); // Space = 1, Ctrl = -1, Neutral = 0
+            Vector3 targetDirection = (forward * vertical) + (right * horizontal) + (up * flyVertical);
 
-            Vector3 targetDirection = (cameraForward * vertical) + (right * horizontal) + (Vector3.up * flyVertical);
-            targetDirection.Normalize(); // Prevents increased speed from diagonal movement
-
-            if (behaviourManager.IsMoving() && targetDirection != Vector3.zero)
+            if (targetDirection != Vector3.zero)
             {
+                targetDirection.Normalize(); // Normalize to prevent speed boosts in diagonal movement
+
+                // Set target rotation to always align with movement direction
+                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+
+                // Smoothly rotate while preserving only the Y-axis rotation
+                Quaternion smoothRotation = Quaternion.Slerp(
+                    rb.rotation,
+                    targetRotation,
+                    Time.deltaTime * 10f // Adjust for smoothness
+                );
+
+                rb.MoveRotation(smoothRotation);
                 behaviourManager.SetLastDirection(targetDirection);
             }
 
-            // If idle, keep last known good rotation.
+            // If idle, keep last rotation
             if (!(Mathf.Abs(horizontal) > 0.2f || Mathf.Abs(vertical) > 0.2f || Mathf.Abs(flyVertical) > 0.2f))
             {
                 behaviourManager.Repositioning();
@@ -183,6 +179,7 @@ public class FlyBehaviour : GenericBehaviour
             return targetDirection;
         }
     }
+
 
 
     Vector3 lastReflectedDirection = Vector3.zero;
