@@ -18,6 +18,8 @@ public class MoveBehaviour : GenericBehaviour
 	private bool jump;                              // Boolean to determine whether or not the player started a jump.
 	private bool isColliding;                       // Boolean to determine if the player has collided with an obstacle.
 
+	public float rotationSlerpSpeed = 10f;
+
 	// Start is always called after any Awake functions.
 	void Start()
 	{
@@ -137,40 +139,31 @@ public class MoveBehaviour : GenericBehaviour
 		behaviourManager.GetRigidBody.linearVelocity = horizontalVelocity;
 	}
 
-	// Rotate the player to match correct orientation, according to camera and key pressed.
-	Vector3 Rotating(float horizontal, float vertical)
-	{
-		// Get camera forward direction, without vertical component.
-		Vector3 forward = behaviourManager.playerCamera.TransformDirection(Vector3.forward);
+    // Rotate the player to match correct orientation, according to camera and key pressed.
+    Vector3 Rotating(float horizontal, float vertical)
+    {
+        // Get camera's forward direction without vertical influence.
+        Vector3 cameraForward = behaviourManager.playerCamera.forward;
+        cameraForward.y = 0; // Lock Y-axis movement to prevent tilting
+        cameraForward.Normalize();
 
-		// Player is moving on ground, Y component of camera facing is not relevant.
-		forward.y = 0.0f;
-		forward = forward.normalized;
+        // Get the current character rotation
+        Quaternion currentRotation = behaviourManager.GetRigidBody.rotation;
+        Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
 
-		// Calculate target direction based on camera forward and direction key.
-		Vector3 right = new Vector3(forward.z, 0, -forward.x);
-		Vector3 targetDirection = forward * vertical + right * horizontal;
+        // Apply smooth rotation with Slerp
+        Quaternion smoothRotation = Quaternion.Slerp(currentRotation, targetRotation, Time.deltaTime * rotationSlerpSpeed); 
 
-		// Lerp current direction to calculated target direction.
-		if ((behaviourManager.IsMoving() && targetDirection != Vector3.zero))
-		{
-			Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+        // Apply rotation
+        behaviourManager.GetRigidBody.MoveRotation(smoothRotation);
 
-			Quaternion newRotation = Quaternion.Slerp(behaviourManager.GetRigidBody.rotation, targetRotation, behaviourManager.turnSmoothing);
-			behaviourManager.GetRigidBody.MoveRotation(newRotation);
-			behaviourManager.SetLastDirection(targetDirection);
-		}
-		// If idle, Ignore current camera facing and consider last moving direction.
-		if (!(Mathf.Abs(horizontal) > 0.9 || Mathf.Abs(vertical) > 0.9))
-		{
-			behaviourManager.Repositioning();
-		}
+        return cameraForward;
+    }
 
-		return targetDirection;
-	}
 
-	// Collision detection.
-	private void OnCollisionStay(Collision collision)
+
+    // Collision detection.
+    private void OnCollisionStay(Collision collision)
 	{
 		isColliding = true;
 		// Slide on vertical obstacles
