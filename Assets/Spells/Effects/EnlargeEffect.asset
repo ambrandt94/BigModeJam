@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9363f3831b3bce9458a177014fddcb38, type: 3}
   m_Name: EnlargeEffect
   m_EditorClassIdentifier: 
-  sizeChangePerSecond: {x: 10, y: 10, z: 10}
+  sizeChange: {x: 0.5, y: 0.5, z: 0.5}
+  duration: 0.2

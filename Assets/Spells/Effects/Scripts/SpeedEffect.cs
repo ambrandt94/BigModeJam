@@ -32,13 +32,13 @@ public class SpeedEffect : ScriptableObject, ISpellEffect
         //moveBehaviour.runSpeed = moveBehaviour.runSpeed * speedChange;
         //moveBehaviour.sprintSpeed = moveBehaviour.sprintSpeed * speedChange;
 
-        if (flyBehaviour == null) {
-            if (target.gameObject.GetComponent<FlyBehaviour>() == null)
-                return;
+        //if (flyBehaviour == null) {
+        //    if (target.gameObject.GetComponent<FlyBehaviour>() == null)
+        //        return;
 
-            flyBehaviour = target.gameObject.GetComponent<FlyBehaviour>();
-        }
-            flyBehaviour.flySpeed = flyBehaviour.flySpeed * 1.1f;
+        //    flyBehaviour = target.gameObject.GetComponent<FlyBehaviour>();
+        //}
+        //    flyBehaviour.flySpeed = flyBehaviour.flySpeed * 1.1f;
 
         
       
