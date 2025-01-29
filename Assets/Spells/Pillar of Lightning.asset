@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 278c971d48e8c014c99ec3af45c5c6c3, type: 3}
+  m_Name: Pillar of Lightning
+  m_EditorClassIdentifier: 
+  spellName: Pillar of Lightning
+  manaCost: 0
+  cooldown: 0.25
+  effectPrefab: {fileID: 2020133114420695665, guid: 972d6ec79fa0edf48ba4ccd1ec7e56fb, type: 3}
+  spellEffects:
+  - {fileID: 11400000, guid: b0f12abee6eaa844fb7a2e6a69f43973, type: 2}
+  - {fileID: 11400000, guid: 8223afe481cfc88459fbe0d5d8d1d648, type: 2}
+  radius: 3

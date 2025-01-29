@@ -1,3 +1,15 @@
-[submodule "Assets/ChainLink/Packages/ChainLink.Photon"]
-	path = Assets/ChainLink/Packages/ChainLink.Photon
-	url = https://github.com/ambrandt94/ChainLink.Photon.git
+[submodule "ChainLink.ContextMenu"] 
+  path = Assets/ChainLink/Packages/ChainLink.ContextMenu
+  url = https://github.com/ambrandt94/ChainLink.ContextMenu.git
+  
+[submodule "ChainLink.StateMachines"] 
+  path = Assets/ChainLink/Packages/ChainLink.StateMachines
+  url = https://github.com/ambrandt94/ChainLink.StateMachines.git
+
+[submodule "ChainLink.Modals"] 
+  path = Assets/ChainLink/Packages/ChainLink.Modals
+  url = https://github.com/ambrandt94/ChainLink.Modals.git
+
+[submodule "ChainLink.Clickables"] 
+  path = Assets/ChainLink/Packages/ChainLink.Clickables
+  url = https://github.com/ambrandt94/ChainLink.Clickables.git

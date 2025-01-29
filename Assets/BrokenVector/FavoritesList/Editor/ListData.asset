@@ -85,3 +85,27 @@ MonoBehaviour:
     - SceneAsset
     sceneGUID: 
     localIdentifier: 0
+  - type: 1
+    actualReference: {fileID: 102900000, guid: d65e1cf0462c37a4a9ebc217d8d2215f, type: 3}
+    cachedDrawData:
+      Name: JamesPowersDemo
+      Icon: {fileID: 985423054452513129, guid: 0000000000000000d000000000000000, type: 0}
+      SceneData:
+        IsScene: 1
+        Scene: {fileID: 102900000, guid: d65e1cf0462c37a4a9ebc217d8d2215f, type: 3}
+    cachedTypes:
+    - SceneAsset
+    sceneGUID: 
+    localIdentifier: 0
+  - type: 1
+    actualReference: {fileID: 102900000, guid: c750886f96ff8054a9fed840e76823ed, type: 3}
+    cachedDrawData:
+      Name: CFXR Demo
+      Icon: {fileID: 985423054452513129, guid: 0000000000000000d000000000000000, type: 0}
+      SceneData:
+        IsScene: 1
+        Scene: {fileID: 102900000, guid: c750886f96ff8054a9fed840e76823ed, type: 3}
+    cachedTypes:
+    - SceneAsset
+    sceneGUID: 
+    localIdentifier: 0
