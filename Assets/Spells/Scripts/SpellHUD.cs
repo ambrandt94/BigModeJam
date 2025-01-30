@@ -62,11 +62,11 @@ public class SpellHUD : MonoBehaviour
 
     private void UpdateCooldownSlider(int spellIndex, float cooldownTime)
     {
-        if (spellIndex < 0 || spellIndex >= cooldownSliders.Length) return;
+        if (spellIndex < 0 || spellIndex >= cooldownSliders?.Length) return;
         cooldownSliders[spellIndex].value = cooldownTime / spellCaster.spells[spellIndex].cooldown;
-        if(cooldownSliders[spellIndex].value == 0)
+        if(cooldownSliders[spellIndex]?.value == 0)
         {
-            Destroy(cooldownSliders[spellIndex].gameObject);
+            Destroy(cooldownSliders[spellIndex]?.gameObject);
         }
     }
 }
