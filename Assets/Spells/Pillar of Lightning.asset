@@ -16,7 +16,8 @@ MonoBehaviour:
   manaCost: 0
   cooldown: 0.25
   effectPrefab: {fileID: 2020133114420695665, guid: 972d6ec79fa0edf48ba4ccd1ec7e56fb, type: 3}
+  effectPrefabRemainsChild: 0
+  hasDuration: 0
   spellEffects:
   - {fileID: 11400000, guid: b0f12abee6eaa844fb7a2e6a69f43973, type: 2}
-  - {fileID: 11400000, guid: 8223afe481cfc88459fbe0d5d8d1d648, type: 2}
   radius: 3

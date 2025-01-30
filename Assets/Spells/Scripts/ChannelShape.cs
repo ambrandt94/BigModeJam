@@ -6,9 +6,13 @@ using static UnityEngine.UI.Image;
 [CreateAssetMenu(menuName = "Spells/ChannelShape")]
 public class ChannelShape : BaseSpell
 {
-    public GameObject Channel;
+    private GameObject Channel;
     public float range;
     public float duration;
+    private float initialHitDistance;
+    private float currentDistance;
+
+    private bool isChanneling = false;
 
     BeamVisual visual;
 
@@ -25,16 +29,43 @@ public class ChannelShape : BaseSpell
                 visual.Apply(origin, origin + direction * range);
             }
             Channel.transform.LookAt(origin + direction * range);
-            Destroy(Channel, duration);
+            
         }
 
+        isChanneling = true;
+        Debug.Log("Starting channeling cast");
         CoroutineRunner.instance.StartCoroutine(CastRoutine(direction));
     }
 
     public override void CastingUpdate(SpellCaster caster)
     {
-        if (visual) {
+        if (Input.GetMouseButtonUp(0))
+        {
+            TryToStopChanneling();
+        }
+
+        if (visual)
+        {
             visual.Apply(Channel.transform.position, Channel.transform.position + caster.Direction * range);
+        }       
+    }
+
+    private void TryToStopChanneling()
+    {
+        if (isChanneling == true)
+        {
+            Debug.Log("Stopping channeling cast");
+            isChanneling = false;
+            // Release telekinesis when the spell ends
+            foreach (var spellEffect in spellEffects)
+            {
+                if (spellEffect is TelekinesisEffect telekinesis)
+                {
+                    telekinesis.Release();
+                }
+            }
+            if(Channel != null)
+                Destroy(Channel);
         }
     }
 
@@ -42,19 +73,68 @@ public class ChannelShape : BaseSpell
     {
         float time = duration;
 
-        while (time > 0) {
-            Gizmos.color = Color.red;
-            Debug.DrawLine(Channel.transform.position, Channel.transform.position + direction * range);
-            if (Physics.Raycast(Channel.transform.position, direction, out RaycastHit hit, range)) {
-                foreach (var spellEffect in spellEffects) {
-                    if (spellEffect is ISpellEffect effect) {
+        while (time > 0)
+        {
+            bool hasValidRaycast = false;
+            Debug.Log("channeling CastRoutine");
+
+            // Debug draw: Show the ray being cast
+            Debug.DrawRay(Channel.transform.position, direction * range, Color.red);
+
+            if (Physics.Raycast(Channel.transform.position, direction, out RaycastHit hit, range))
+            {
+                hasValidRaycast = true;
+                initialHitDistance = hit.distance;
+
+                // Debug draw: Show hit point
+                Debug.DrawLine(hit.point, hit.point + Vector3.up * 0.5f, Color.green, 0.1f);
+                Debug.Log($"Raycast Hit: {hit.transform.name} at {hit.point}");
+
+                foreach (var spellEffect in spellEffects)
+                {
+                    if (spellEffect is TelekinesisEffect telekinesis)
+                    {
+                        // Apply effect and also Debug log
+                        Debug.Log($"Applying Telekinesis to {hit.transform.name}");                       
+                        telekinesis.Apply(hit.transform, hit.point, Time.deltaTime);
+                    }
+                    else if (spellEffect is ISpellEffect effect)
+                    {
                         effect.Apply(hit.transform, hit.point, Time.deltaTime);
                     }
                 }
             }
+            else
+            {
+                Debug.LogWarning("Raycast missed!");
+            }
+
+            // Debug draw: Show object tracking position
+            foreach (var spellEffect in spellEffects)
+            {
+                if (spellEffect is TelekinesisEffect telekinesis && telekinesis.HasTarget())
+                {
+                    Debug.DrawLine(telekinesis.GetTargetPosition(), telekinesis.GetTargetPosition() + Vector3.up * 0.5f, Color.blue, 0.1f);
+                    Debug.Log($"Object Position: {telekinesis.GetTargetPosition()}");
+                }
+            }
+
+            // Ensure telekinesis keeps updating even if raycast misses
+            foreach (var spellEffect in spellEffects)
+            {
+                if (spellEffect is TelekinesisEffect telekinesis)
+                {
+                    telekinesis.UpdateEffect(hasValidRaycast);
+                }
+            }
+
             time -= Time.deltaTime;
-            
             yield return null;
         }
+
+        TryToStopChanneling();
     }
+
+
+
 }

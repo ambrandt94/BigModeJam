@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7513473c70293b4f899076670dc5d51, type: 3}
   m_Name: AirExplosionKnockbackEffect
   m_EditorClassIdentifier: 
-  knockbackForce: 12500
+  knockbackForce: 250
   targetLayer:
     serializedVersion: 2
     m_Bits: 1

@@ -16,8 +16,9 @@ MonoBehaviour:
   manaCost: 0
   cooldown: 0.05
   effectPrefab: {fileID: 2020133114420695665, guid: 331732463dd289b4e94b16b895606376, type: 3}
+  effectPrefabRemainsChild: 0
+  hasDuration: 0
   spellEffects:
   - {fileID: 11400000, guid: d59c913f00d50ff44a2da827b744dcd8, type: 2}
   - {fileID: 11400000, guid: 05502d74d370eeb498915770310ddfa5, type: 2}
-  - {fileID: 11400000, guid: 15d66c80f0e7a434fb8dc8e7e52fd4f6, type: 2}
   speed: 30
