@@ -15,9 +15,11 @@ public class ChannelShape : BaseSpell
     private bool isChanneling = false;
 
     BeamVisual visual;
+    SpellCaster spellCaster;
 
     public override void Cast(SpellCaster caster, Vector3 origin, Vector3 direction)
     {
+        this.spellCaster = caster;
         var startTime = Time.time;
 
         if (effectPrefab) {
@@ -95,7 +97,8 @@ public class ChannelShape : BaseSpell
                     if (spellEffect is TelekinesisEffect telekinesis)
                     {
                         // Apply effect and also Debug log
-                        Debug.Log($"Applying Telekinesis to {hit.transform.name}");                       
+                        Debug.Log($"Applying Telekinesis to {hit.transform.name}");
+                        telekinesis.SetCaster(this.spellCaster);
                         telekinesis.Apply(hit.transform, hit.point, Time.deltaTime);
                     }
                     else if (spellEffect is ISpellEffect effect)

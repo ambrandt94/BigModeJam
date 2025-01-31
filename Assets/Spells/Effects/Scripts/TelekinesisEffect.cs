@@ -14,16 +14,21 @@ public class TelekinesisEffect : ScriptableObject, ISpellEffect
     private Rigidbody targetRigidbody;
     private Transform trackingTransform;
     private SpellCaster caster;
+
+    public void SetCaster(SpellCaster _caster)
+    {
+        this.caster = _caster;
+    }
     private float initialDistance; // The distance at which the object was first hit
     private float lastHitTime; // Tracks last valid raycast hit
 
     public void Apply(Transform target, Vector3 hitPoint, float deltaTime)
     {
-        if (telekinesisTarget == null)
+        if (telekinesisTarget == null && caster != null)
         {
             telekinesisTarget = target;
             targetRigidbody = target.GetComponent<Rigidbody>();
-            caster = FindObjectOfType<SpellCaster>();
+            //caster = FindObjectOfType<SpellCaster>();
             lastHitTime = Time.time;
 
             if (targetRigidbody)
