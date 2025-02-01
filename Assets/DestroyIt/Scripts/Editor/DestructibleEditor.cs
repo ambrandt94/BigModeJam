@@ -13,6 +13,7 @@ namespace DestroyIt
     [CustomEditor(typeof(Destructible)), CanEditMultipleObjects]
     public class DestructibleEditor : Editor
     {
+        private SerializedProperty TrackMe;
         private GameObject previousDestroyedPrefab;
         private SerializedProperty fallbackParticle;
         private SerializedProperty fallbackParticleMatOption;
@@ -39,6 +40,7 @@ namespace DestroyIt
 
         public void OnEnable()
         {
+            TrackMe = serializedObject.FindProperty("TrackMe");
             fallbackParticle = serializedObject.FindProperty("fallbackParticle");
             fallbackParticleMatOption = serializedObject.FindProperty("fallbackParticleMatOption");
             totalHitPoints = serializedObject.FindProperty("_totalHitPoints");
@@ -155,6 +157,10 @@ namespace DestroyIt
                 GUI.color = Color.white;
                 EditorGUILayout.EndHorizontal();
             }
+
+            // CAN BE DESTROYED
+            TrackMe.boolValue = EditorGUILayout.Toggle(new GUIContent("TrackMe", "If checked, the object will be tracked by any DestructibleTracker scripts. What happens with that data is flexible and not driven by the Destructible class."), TrackMe.boolValue);
+            destructible.TrackMe = TrackMe.boolValue;
 
             EditorGUILayout.Separator();
             EditorGUILayout.EndVertical();

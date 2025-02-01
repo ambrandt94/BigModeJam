@@ -43,8 +43,8 @@ public class SmoothPatrolBehavior : MonoBehaviour
             return;
         }
 
-        transform.position = path[0];
-        targetIndex = 1;
+        //transform.position = path[0];
+        //targetIndex = 0;
         isPatrolling = true;
         lastWaypointTime = Time.time;
         currentSpeed = baseSpeed; // ✅ Start at base cruise speed
@@ -61,48 +61,56 @@ public class SmoothPatrolBehavior : MonoBehaviour
 
         Vector3 targetPosition = path[targetIndex];
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
-        float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
 
-        // ✅ Prevent AI from slowing down excessively in short waypoint segments
-        if (distanceToTarget < minWaypointDistance)
-        {
-            currentSpeed = Mathf.Lerp(currentSpeed, baseSpeed, acceleration * Time.deltaTime);
-        }
-        else
-        {
-            float turnSeverity = 1f - Vector3.Dot(transform.forward, moveDirection);
-            float targetSpeed = Mathf.Lerp(maxSpeed, minTurnSpeed, turnSeverity);
-            currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * (targetSpeed > currentSpeed ? acceleration : deceleration));
-        }
-
-        // ✅ Apply movement using a natural transition
-        transform.position = Vector3.Lerp(transform.position, targetPosition, smoothingFactor * Time.deltaTime * currentSpeed);
+        // ✅ Set AI to a constant speed regardless of waypoint spacing
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, currentSpeed * Time.deltaTime);
 
         // ✅ Rotate AI smoothly towards movement direction
         Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-        // ✅ Improved Tilt: Increase tilt for a more dramatic banking motion
+        // ✅ Increase tilt when turning
         float turnDirection = Vector3.Dot(transform.right, moveDirection);
         float tiltFactor = Mathf.Lerp(0f, tiltAmount, Mathf.Abs(turnDirection));
         transform.rotation *= Quaternion.Euler(0, 0, Mathf.Lerp(0, -tiltFactor, tiltSpeed * Time.deltaTime));
 
+        // ✅ Debug: Show AI movement trail
+        Debug.DrawRay(transform.position, moveDirection * 3f, Color.red);
+
+        // ✅ Ensure AI properly loops back after reaching last waypoint
         if (HasPassedWaypoint(targetIndex) && Time.time - lastWaypointTime > waypointCooldownTime)
         {
             lastWaypointTime = Time.time;
-            targetIndex = (targetIndex + 1) % path.Count;
+
+            if (targetIndex == path.Count - 1)
+            {
+                // ✅ Loop back to first waypoint
+                targetIndex = 0;
+            }
+            else
+            {
+                // ✅ Move to the next waypoint
+                targetIndex++;
+            }
+
+            Debug.Log($"✅ Switching to waypoint {targetIndex}");
         }
     }
 
+
+
+
     private bool HasPassedWaypoint(int index)
     {
-        if (index < 1 || index >= path.Count) return false;
+        if (index < 0 || index >= path.Count) return false;
 
-        Vector3 lastPosition = path[index - 1];
+        Vector3 lastPosition = (index == 0) ? path[path.Count - 1] : path[index - 1]; // ✅ Correctly get the last position even when looping
         Vector3 targetPosition = path[index];
         Vector3 moveDirection = (targetPosition - lastPosition).normalized;
         Vector3 aiDirection = (transform.position - lastPosition).normalized;
 
-        return Vector3.Dot(moveDirection, aiDirection) > 0.95f;
+        // ✅ Ensure AI smoothly transitions when looping back to the first waypoint
+        return Vector3.Dot(moveDirection, aiDirection) > 0.85f;
     }
+
 }

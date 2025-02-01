@@ -1,4 +1,5 @@
-﻿    using System;
+﻿using DestroyIt;
+using System;
 using UnityEngine;
 
 // FlyBehaviour inherits from GenericBehaviour. This class corresponds to the flying behaviour.
@@ -198,9 +199,9 @@ public class FlyBehaviour : GenericBehaviour
             if (((1 << collision.gameObject.layer) & destructibleLayers) != 0)
             {
 
-                if (collision.gameObject.GetComponentInParent<DestructibleObject>() != null)
+                if (collision.gameObject.GetComponentInParent<Destructible>() != null)
                 {
-                    collision.gameObject.GetComponentInParent<DestructibleObject>().DestroyObject();
+                    collision.gameObject.GetComponentInParent<Destructible>().ApplyDamage(50);
                     //desiredVelocity *= slowDownFactor;
                 }               
 

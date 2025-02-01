@@ -12,7 +12,7 @@ public class DuplicatorEffect : ScriptableObject, ISpellEffect
 
     public void Apply(Transform target, Vector3 hitPoint, float deltaTime)
     {
-        if (target == null || target.GetComponent<Renderer>() == null)
+        if (target == null)
         {
             Debug.LogWarning("DuplicatorEffect: Target is not a valid object for duplication.");
             return;
@@ -29,9 +29,15 @@ public class DuplicatorEffect : ScriptableObject, ISpellEffect
         GameObject clone = Instantiate(target.gameObject, spawnPosition, target.rotation);
         clone.name = target.name + "_Duplicate";
 
-        // Start at a smaller scale and animate to full scale
-        clone.transform.localScale *= 0.02f;
-        CoroutineRunner.instance.StartCoroutine(ScaleUp(clone.transform, 1f, spawnScaleDuration));
+        Vector3 targetTotalScale = GetTotalScale(target);
+
+        // Start at a smaller scale (relative to the target's total scale)
+        clone.transform.localScale = new Vector3(
+            targetTotalScale.x * 0.02f,
+            targetTotalScale.y * 0.02f,
+            targetTotalScale.z * 0.02f);
+
+        CoroutineRunner.instance.StartCoroutine(ScaleUp(clone.transform, targetTotalScale, spawnScaleDuration));
 
         // Handle Rigidbody properties
         Rigidbody cloneRb = clone.GetComponent<Rigidbody>();
@@ -52,12 +58,11 @@ public class DuplicatorEffect : ScriptableObject, ISpellEffect
         Debug.Log($"DuplicatorEffect: Cloned '{target.name}' at {spawnPosition}");
     }
 
-    // Smoothly scale the clone from 0.1x to full size
-    private IEnumerator ScaleUp(Transform obj, float targetScale, float duration)
+    private IEnumerator ScaleUp(Transform obj, Vector3 targetTotalScale, float duration)
     {
         float time = 0f;
         Vector3 startScale = obj.localScale;
-        Vector3 endScale = Vector3.one * targetScale;
+        Vector3 endScale = targetTotalScale; // Scale up to the target's total scale
 
         while (time < duration)
         {
@@ -66,7 +71,27 @@ public class DuplicatorEffect : ScriptableObject, ISpellEffect
             yield return null;
         }
 
-        obj.localScale = endScale; // Ensure final size is exactly 1
+        obj.localScale = endScale; // Ensure final size is exactly correct
+    }
+
+
+    // Recursive function to get the total scale of an object (including parents)
+    private Vector3 GetTotalScale(Transform obj)
+    {
+        Vector3 totalScale = Vector3.one;
+        Transform currentTransform = obj;
+
+        while (currentTransform != null)
+        {
+            totalScale = new Vector3(
+                totalScale.x * currentTransform.localScale.x,
+                totalScale.y * currentTransform.localScale.y,
+                totalScale.z * currentTransform.localScale.z);
+
+            currentTransform = currentTransform.parent;
+        }
+
+        return totalScale;
     }
 
     // Helper method to calculate the object's total bounds (handles complex objects)

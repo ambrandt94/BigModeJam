@@ -19,4 +19,4 @@ MonoBehaviour:
   effectPrefabRemainsChild: 0
   hasDuration: 0
   spellEffects: []
-  speed: 200
+  speed: 100

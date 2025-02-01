@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 795869068191060713}
   - component: {fileID: 2029789369095847831}
   - component: {fileID: 794128424598803648}
-  - component: {fileID: 8126550093921892455}
   m_Layer: 2
   m_Name: AoE Lightning Effect
   m_TagString: Untagged
@@ -74,36 +73,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d59c913f00d50ff44a2da827b744dcd8, type: 2}
   areaEffectPrefab: {fileID: 2020133114420695665, guid: dfcf518f175f320428157962472376e9, type: 3}
   delayBeforeEffect: 0
---- !u!114 &8126550093921892455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2020133114420695665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a819fa1090af55440b7c2ac48e3ba7fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  events:
-  - eventName: DisableSelf
-    unityEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2020133114420695665}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    delay: 1
 --- !u!1001 &8940499703295653865
 PrefabInstance:
   m_ObjectHideFlags: 0

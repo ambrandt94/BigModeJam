@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5393044782084311694}
   - component: {fileID: 2029789369095847831}
   - component: {fileID: 6063842596006695357}
+  - component: {fileID: 3413526606691077097}
   m_Layer: 2
   m_Name: Pillar of Lightning Visual Effect
   m_TagString: Untagged
@@ -127,10 +128,10 @@ MonoBehaviour:
     unityEvent:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2020133114420695665}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
+        - m_Target: {fileID: 3413526606691077097}
+          m_TargetAssemblyTypeName: DestroyHelper, Assembly-CSharp
+          m_MethodName: DestroyObject
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -140,6 +141,18 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     delay: 1
+--- !u!114 &3413526606691077097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020133114420695665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcffc668e09f5c047966f2cf7443c3f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4241678484774820810
 PrefabInstance:
   m_ObjectHideFlags: 0

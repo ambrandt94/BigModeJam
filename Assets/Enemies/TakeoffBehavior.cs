@@ -7,11 +7,19 @@ public class TakeoffBehavior : MonoBehaviour
     public Transform takeoffRaycastOrigin;
     public bool HasTakenOff { get; private set; } = true;
 
-    public bool CheckTakeoff(FlyingEnemy enemy)
+    private FlyingEnemy enemy;
+
+    public bool CheckTakeoff(FlyingEnemy _enemy)
     {
+        if (enemy == null)
+            this.enemy = _enemy;
         if (Physics.Raycast(takeoffRaycastOrigin.position, Vector3.down, out RaycastHit hit) && hit.distance < minHeight)
         {
             HasTakenOff = false;
+        }
+        else
+        {
+            HasTakenOff = true;
         }
         return HasTakenOff;
     }
@@ -21,9 +29,6 @@ public class TakeoffBehavior : MonoBehaviour
         if (HasTakenOff) return;
 
         transform.position += Vector3.up * takeoffSpeed * Time.deltaTime;
-        if (transform.position.y >= minHeight)
-        {
-            HasTakenOff = true;
-        }
+        CheckTakeoff(enemy);
     }
 }

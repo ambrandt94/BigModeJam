@@ -10,7 +10,27 @@ public class ProjectileShape : BaseSpell
     {
         if (effectPrefab)
         {
-            var projectile = Instantiate(effectPrefab, origin, Quaternion.LookRotation(direction));
+
+            // 1. Calculate the base rotation (same as before)
+            Quaternion baseRotation = Quaternion.LookRotation(direction);
+
+            // 2. Apply the capsule's initial rotation offset
+            //    This assumes your capsule's long axis is along the Z-axis in its prefab.
+            //    Adjust the rotation if your capsule's long axis is different.
+
+            Quaternion capsuleRotationOffset = Quaternion.Euler(90f, 0f, 0f); // Example: 90-degree rotation around X
+
+            Quaternion finalRotation = baseRotation * capsuleRotationOffset;
+            var projectile = Instantiate(effectPrefab, origin, finalRotation);
+
+            var projectileCollider = projectile.GetComponent<Collider>();
+            var casterCollider = caster.GetComponent<Collider>();
+
+            if (projectileCollider && casterCollider)
+            {
+                Physics.IgnoreCollision(projectileCollider, casterCollider); // Ignore collision
+            }
+
             var rb = projectile.GetComponent<Rigidbody>();
 
             if (rb)
