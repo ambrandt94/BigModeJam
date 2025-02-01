@@ -62,18 +62,6 @@ MonoBehaviour:
     sceneGUID: 
     localIdentifier: 0
   - type: 1
-    actualReference: {fileID: 102900000, guid: 448cd041c552d20498ddec03cc813151, type: 3}
-    cachedDrawData:
-      Name: Main Scenarios Scene
-      Icon: {fileID: 985423054452513129, guid: 0000000000000000d000000000000000, type: 0}
-      SceneData:
-        IsScene: 1
-        Scene: {fileID: 102900000, guid: 448cd041c552d20498ddec03cc813151, type: 3}
-    cachedTypes:
-    - SceneAsset
-    sceneGUID: 
-    localIdentifier: 0
-  - type: 1
     actualReference: {fileID: 102900000, guid: 9df9f020877fb4842b75396ddf708b69, type: 3}
     cachedDrawData:
       Name: InfiniteWorld
@@ -81,18 +69,6 @@ MonoBehaviour:
       SceneData:
         IsScene: 1
         Scene: {fileID: 102900000, guid: 9df9f020877fb4842b75396ddf708b69, type: 3}
-    cachedTypes:
-    - SceneAsset
-    sceneGUID: 
-    localIdentifier: 0
-  - type: 1
-    actualReference: {fileID: 102900000, guid: d65e1cf0462c37a4a9ebc217d8d2215f, type: 3}
-    cachedDrawData:
-      Name: JamesPowersDemo
-      Icon: {fileID: 985423054452513129, guid: 0000000000000000d000000000000000, type: 0}
-      SceneData:
-        IsScene: 1
-        Scene: {fileID: 102900000, guid: d65e1cf0462c37a4a9ebc217d8d2215f, type: 3}
     cachedTypes:
     - SceneAsset
     sceneGUID: 
@@ -107,5 +83,32 @@ MonoBehaviour:
         Scene: {fileID: 102900000, guid: c750886f96ff8054a9fed840e76823ed, type: 3}
     cachedTypes:
     - SceneAsset
+    sceneGUID: 
+    localIdentifier: 0
+  - type: 1
+    actualReference: {fileID: 102900000, guid: 0684e71ec0516ab49bfb3674ce14e4ea, type: 3}
+    cachedDrawData:
+      Name: ShowcaseScene
+      Icon: {fileID: 985423054452513129, guid: 0000000000000000d000000000000000, type: 0}
+      SceneData:
+        IsScene: 1
+        Scene: {fileID: 102900000, guid: 0684e71ec0516ab49bfb3674ce14e4ea, type: 3}
+    cachedTypes:
+    - SceneAsset
+    sceneGUID: 
+    localIdentifier: 0
+  - type: 1
+    actualReference: {fileID: 2798397149325655480, guid: c73d34dabbce41a46849c63372b4afe2, type: 3}
+    cachedDrawData:
+      Name: BuildingSegment
+      Icon: {fileID: 7853449062886713960, guid: 0000000000000000d000000000000000, type: 0}
+      SceneData:
+        IsScene: 0
+        Scene: {fileID: 0}
+    cachedTypes:
+    - GameObject
+    - Transform
+    - BuildingSegment
+    - Resizable
     sceneGUID: 
     localIdentifier: 0

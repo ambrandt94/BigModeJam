@@ -52,6 +52,7 @@ namespace DestroyIt
 
                 if (other.attachedRigidbody == null || other.attachedRigidbody.GetComponent<Destructible>() == null)
                 {
+                    Debug.Log($"Collision Report: {other.gameObject.name} and  {gameObject.name}. Magnitude: {collision.relativeVelocity.magnitude}");
                     if (collision.relativeVelocity.magnitude >= destObj.ignoreCollisionsUnder)
                     {
                         destObj.ProcessDestructibleCollision(collision, gameObject.GetComponent<Rigidbody>());

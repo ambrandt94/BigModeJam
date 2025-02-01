@@ -9,6 +9,7 @@ namespace BigModeJam
         [SerializeField]
         private Transform target;
 
+        private CharacterAnimator animator;
         private IAstarAI ai;
 
         [Button("Go to Target")]
@@ -31,6 +32,7 @@ namespace BigModeJam
 
         private void Update()
         {
+            animator.IsWalking = ai.remainingDistance > 0;
             if (ai.reachedDestination) {
                 //ai.isStopped = true;
                 //ai.canSearch = false;
@@ -42,6 +44,7 @@ namespace BigModeJam
         {
             ai = GetComponent<IAstarAI>();
             ai.onSearchPath += OnSearchPath;
+            animator = GetComponentInChildren<CharacterAnimator>();
             //OnSearchPath();
         }
     }

@@ -5,18 +5,58 @@ using UnityEngine;
 
 public class BuildingSegmentGroup : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject segmentPrefab;
+    [SerializeField]
+    private Transform spawnStartTransform;
+    [SerializeField]
+    private float SegmentHeight;
+    [SerializeField]
+    GenericAssetPool buildingAssetPool;
+
     private List<BuildingSegment> segments;
 
     [Button("Set Building Texture")]
     public void SetBaseBuildingTexture(Texture texture)
     {
+        foreach (var segment in segments) {
+            segment.customTexture = texture;
+        }
         foreach (MaterialUtility mat in MaterialUtility.GetUtilitiesWithId("base", transform)) {
             mat.SetTexture(texture);
         }
     }
 
+    public void OnSegmentDestroyed(BuildingSegment segment)
+    {
+        bool hitSegment = false;
+        for (int i = 0; i < segments.Count; i++) {
+            if (!hitSegment && segment == segments[i]) {
+                hitSegment = true;
+            }
+            if (hitSegment)
+                segments[i].ToggleConstraints(false);
+        }
+    }
+
+    private void InitializeSegments()
+    {
+        int num = Random.Range(1, 8);
+        Vector3 spawnPos = Vector3.zero;
+        for (int i = 0; i < num; i++) {
+            BuildingSegment segment = Instantiate(segmentPrefab, spawnPos, Quaternion.identity).GetComponent<BuildingSegment>();
+            segment.transform.SetParent(spawnStartTransform,true);
+            segment.transform.localPosition = spawnPos;
+            segment.transform.localScale = Vector3.one;
+            segments.Add(segment);
+            spawnPos.y += SegmentHeight;
+        }
+        SetBaseBuildingTexture(buildingAssetPool.GetRandom("base") as Texture);
+    }
+
     private void Awake()
     {
         segments = new List<BuildingSegment>(GetComponentsInChildren<BuildingSegment>());
+        InitializeSegments();
     }
 }

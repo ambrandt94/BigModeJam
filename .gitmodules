@@ -13,3 +13,6 @@
 [submodule "ChainLink.Clickables"] 
   path = Assets/ChainLink/Packages/ChainLink.Clickables
   url = https://github.com/ambrandt94/ChainLink.Clickables.git
+[submodule "Assets/Plugins/WFC"]
+	path = Assets/Plugins/WFC
+	url = https://github.com/mmarco02/WFC.git

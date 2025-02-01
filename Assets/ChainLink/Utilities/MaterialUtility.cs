@@ -77,6 +77,14 @@ namespace ChainLink.Core
             }
         }
 
+        [Button("Reset")]
+        private void ResetMaterial()
+        {
+            renderer.GetPropertyBlock(Block);
+            Block.Clear();
+            renderer.SetPropertyBlock(Block);
+        }
+
         private void OnValidate()
         {
             if (renderer != null) {

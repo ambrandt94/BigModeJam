@@ -1,6 +1,6 @@
 {
     "_version": "4.5",
-    "_rootDirectory": "",
+    "_rootDirectory": "Assets/PluginMaster/DesignTools/Editor/PrefabWorldBuilder",
     "_autoSavePeriodMinutes": 1,
     "_undoPalette": true,
     "_controlPointSize": 2,
@@ -22,11 +22,11 @@
     "_tempCollidersAction": 1,
     "_paletteManager": {
         "_selectedPaletteIdx": 0,
-        "_selectedBrushIdx": -1,
+        "_selectedBrushIdx": 60,
         "_showBrushName": false,
         "_viewList": false,
         "_showTabsInMultipleRows": false,
-        "_iconSize": 64
+        "_iconSize": 118
     },
     "_pinManager": {
         "_profileKeys": [
@@ -185,7 +185,7 @@
                 "_clearDetails": true
             },
             "_flattenTerrain": false,
-            "_avoidOverlapping": false,
+            "_avoidOverlapping": true,
             "_snapRotationToGrid": false,
             "_paintTool": {
                 "_parentGlobalId": "",
@@ -470,8 +470,7 @@
                     "Player",
                     "GameController",
                     "FxTemporaire",
-                    "ClingPoint",
-                    "Projectile"
+                    "ClingPoint"
                 ],
                 "_slopeFilter": {
                     "_v1": 0.0,
@@ -614,7 +613,7 @@
                 "z": 0.0
             },
             "_spacingType": 0,
-            "_minSpacing": 1.0,
+            "_minSpacing": 5.0,
             "_randomizePositions": true,
             "_randomness": 1.0,
             "_paintOnSurfaceToolSettings": {
@@ -1537,7 +1536,7 @@
                 }
             },
             "_shapeType": 1,
-            "_sidesCount": 5,
+            "_sidesCount": 4,
             "_axisNormalToSurface": true,
             "_normal": {
                 "x": 0.0,
@@ -1711,8 +1710,8 @@
             "_paralellToTheSurface": true,
             "_cellSizeType": 0,
             "_cellSize": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 5.0,
+                "y": 1.5073928833007813
             },
             "_rotation": {
                 "x": 0.0,
@@ -2182,8 +2181,7 @@
                     "Player",
                     "GameController",
                     "FxTemporaire",
-                    "ClingPoint",
-                    "Projectile"
+                    "ClingPoint"
                 ]
             }
         ],
@@ -2883,13 +2881,13 @@
     },
     "_snapManager": {
         "_settings": {
-            "_snappingEnabled": false,
+            "_snappingEnabled": true,
             "_snappingOn": {
                 "x": false,
                 "y": false,
                 "z": false
             },
-            "_visibleGrid": false,
+            "_visibleGrid": true,
             "_gridOn": {
                 "x": false,
                 "y": true,
@@ -2897,13 +2895,13 @@
             },
             "_lockedGrid": false,
             "_step": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
+                "x": 5.0,
+                "y": 5.0,
+                "z": 5.0
             },
             "_origin": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": 54.72996520996094,
                 "z": 0.0
             },
             "_rotation": {
