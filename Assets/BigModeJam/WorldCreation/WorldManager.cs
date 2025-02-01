@@ -18,10 +18,11 @@ public class WorldManager : Singleton<WorldManager> {
         aStar.Scan();
     }
 
-    private void Awake()
+    private void Start()
     {
         generator = GetComponent<WorldGenerator>();
         aStar = FindObjectOfType<AstarPath>(true);
         aStar.scanOnStartup = false;
+        Generate();
     }
 }

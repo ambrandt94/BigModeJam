@@ -45,6 +45,8 @@ public class BuildingSegmentGroup : MonoBehaviour
 
     private void InitializeSegments()
     {
+        if (segmentPrefab == null)
+            return;
         int num = Random.Range(1, 14);
         Vector3 spawnPos = Vector3.zero;
         for (int i = 0; i < num; i++) {

@@ -31,6 +31,7 @@ public class WorldTileGenerator : MonoBehaviour
         for (int y = 0; y < Dimensions; y++) {
             for (int x = 0; x < Dimensions; x++) {
                 WorldCell newCell = Instantiate(CellPrefab, new Vector3(x * Spacing, 0, y * Spacing), Quaternion.identity);
+                newCell.transform.parent = transform;
                 newCell.CreateCell(false, TileObjects);
                 Cells.Add(newCell);
             }
@@ -63,8 +64,8 @@ public class WorldTileGenerator : MonoBehaviour
         cellToCollapse.TileOptions = new WorldTile[] { selectedTile };
 
         WorldTile foundTile = cellToCollapse.TileOptions[0];
-        Instantiate(foundTile, cellToCollapse.transform.position, Quaternion.identity);
-
+        WorldTile newTile = Instantiate(foundTile, cellToCollapse.transform.position, Quaternion.identity);
+        newTile.transform.parent = cellToCollapse.transform;
         UpdateGeneration();
     }
 
