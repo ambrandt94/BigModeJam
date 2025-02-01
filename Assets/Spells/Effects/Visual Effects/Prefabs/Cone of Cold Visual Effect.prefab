@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7938629232345607197}
   - component: {fileID: 506274239369385151}
   - component: {fileID: 5573159034893632786}
+  - component: {fileID: 782126508130405419}
   m_Layer: 0
   m_Name: Cone of Cold Visual Effect
   m_TagString: Untagged
@@ -51,10 +52,10 @@ MonoBehaviour:
     unityEvent:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7518399095256348770}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
+        - m_Target: {fileID: 782126508130405419}
+          m_TargetAssemblyTypeName: DestroyHelper, Assembly-CSharp
+          m_MethodName: DestroyObject
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -161,6 +162,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &782126508130405419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7518399095256348770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcffc668e09f5c047966f2cf7443c3f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &472671812746553005
 PrefabInstance:
   m_ObjectHideFlags: 0

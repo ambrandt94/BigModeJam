@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: Air Explosion
   manaCost: 0
-  cooldown: 0
+  cooldown: 1
   effectPrefab: {fileID: 7069442259307467922, guid: 0036e0c836bffa94b8ee46189689a262, type: 3}
+  effectPrefabRemainsChild: 0
+  hasDuration: 0
   spellEffects:
   - {fileID: 11400000, guid: 17e9184533619af4096a0fe541864d7b, type: 2}
   radius: 5

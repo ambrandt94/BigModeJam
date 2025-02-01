@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7938629232345607197}
   - component: {fileID: 506274239369385151}
+  - component: {fileID: 5833783920506687110}
   m_Layer: 0
   m_Name: Burning Visual Effect
   m_TagString: Untagged
@@ -51,10 +52,10 @@ MonoBehaviour:
     unityEvent:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7518399095256348770}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
+        - m_Target: {fileID: 5833783920506687110}
+          m_TargetAssemblyTypeName: DestroyHelper, Assembly-CSharp
+          m_MethodName: DestroyObject
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -64,6 +65,18 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     delay: 1
+--- !u!114 &5833783920506687110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7518399095256348770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcffc668e09f5c047966f2cf7443c3f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2841492762037617492
 PrefabInstance:
   m_ObjectHideFlags: 0

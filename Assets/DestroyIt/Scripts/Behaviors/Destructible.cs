@@ -8,10 +8,15 @@ using UnityEngine.Serialization;
 
 namespace DestroyIt
 {
+
+
     /// <summary>Put this script on an object you want to be destructible.</summary>
     [DisallowMultipleComponent]
     public class Destructible : MonoBehaviour
     {
+        [SerializeField]
+        public bool TrackMe = true;
+        public static List<Destructible> AllTrackedDestructibles { get; private set; } = new List<Destructible>();
         public float TotalHitPoints
         {
             get { return _totalHitPoints; }
@@ -105,6 +110,17 @@ namespace DestroyIt
         public event Action DestroyedEvent;
         public event Action RepairedEvent;
 
+
+        private void OnEnable()
+        {
+            if (!AllTrackedDestructibles.Contains(this) && TrackMe)
+                AllTrackedDestructibles.Add(this);
+        }
+
+        private void OnDisable()
+        {
+            AllTrackedDestructibles.Remove(this);
+        }
         public void Start()
         {
             CheckForClingingDebris = true;

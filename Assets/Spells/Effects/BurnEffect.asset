@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d47a1e3a308244490cd93534714815, type: 3}
   m_Name: BurnEffect
   m_EditorClassIdentifier: 
-  damageAmount: 0
+  damageAmount: 25

@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: Green Channel
   manaCost: 0
-  cooldown: 0
+  cooldown: 1
   effectPrefab: {fileID: 6972713332440678516, guid: d3993d997a93fd44c964b99c694e8bf3, type: 3}
   effectPrefabRemainsChild: 1
+  hasDuration: 0
   spellEffects:
   - {fileID: 11400000, guid: ac4d46bf5bc865e4fa00ae3005545e95, type: 2}
   - {fileID: 11400000, guid: 15d66c80f0e7a434fb8dc8e7e52fd4f6, type: 2}
