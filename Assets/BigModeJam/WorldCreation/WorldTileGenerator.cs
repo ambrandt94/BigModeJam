@@ -7,6 +7,8 @@ using System.Linq;
 using UnityEngine;
 public class WorldTileGenerator : MonoBehaviour
 {
+    public Action OnFinished;
+
     public WorldTile[] TileObjects;
     public List<WorldCell> Cells;
     public WorldCell CellPrefab;
@@ -18,6 +20,12 @@ public class WorldTileGenerator : MonoBehaviour
 
     private int iterations = 0;
 
+    public void Generate()
+    {
+        InitializeGrid();
+        StartCoroutine(CheckEntropyRoutine());
+    }
+
     private void InitializeGrid()
     {
         for (int y = 0; y < Dimensions; y++) {
@@ -27,7 +35,6 @@ public class WorldTileGenerator : MonoBehaviour
                 Cells.Add(newCell);
             }
         }
-        StartCoroutine(CheckEntropyRoutine());
     }
 
     private IEnumerator CheckEntropyRoutine()
@@ -104,7 +111,7 @@ public class WorldTileGenerator : MonoBehaviour
 
                         CheckValidity(options, validOptions);
                         int after = options.Count;
-                        Debug.Log($"Checked UP. {before} -> {after}");
+                        //Debug.Log($"Checked UP. {before} -> {after}");
                     }
 
                     //update right
@@ -122,7 +129,7 @@ public class WorldTileGenerator : MonoBehaviour
                             }
                             CheckValidity(options, validOptions);
                             int after = options.Count;
-                            Debug.Log($"Checked RIGHT. {before} -> {after}", right.gameObject);
+                            //Debug.Log($"Checked RIGHT. {before} -> {after}", right.gameObject);
                         } catch (Exception e) {
                             Debug.LogError($"Gen Error: {e}", right);
                         }
@@ -143,7 +150,7 @@ public class WorldTileGenerator : MonoBehaviour
 
                         CheckValidity(options, validOptions);
                         int after = options.Count;
-                        Debug.Log($"Checked DOWN. {before} -> {after}", down.gameObject);
+                        //Debug.Log($"Checked DOWN. {before} -> {after}", down.gameObject);
 
                     }
 
@@ -163,7 +170,7 @@ public class WorldTileGenerator : MonoBehaviour
 
                         CheckValidity(options, validOptions);
                         int after = options.Count;
-                        Debug.Log($"Checked LEFT. {before} -> {after}", left.gameObject);
+                        //Debug.Log($"Checked LEFT. {before} -> {after}", left.gameObject);
 
                     }
                     WorldTile[] newTileList = new WorldTile[options.Count];
@@ -259,6 +266,8 @@ public class WorldTileGenerator : MonoBehaviour
 
         if (iterations < Dimensions * Dimensions) {
             StartCoroutine(CheckEntropyRoutine());
+        } else {
+            OnFinished?.Invoke();
         }
     }
 
@@ -324,6 +333,5 @@ public class WorldTileGenerator : MonoBehaviour
     private void Awake()
     {
         Cells = new List<WorldCell>();
-        InitializeGrid();
     }
 }

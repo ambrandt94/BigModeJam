@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   segmentPrefab: {fileID: 2798397149325655480, guid: c73d34dabbce41a46849c63372b4afe2, type: 3}
-  spawnStartTransform: {fileID: 0}
+  spawnStartTransform: {fileID: 7736865612416654661}
   SegmentHeight: 2.6
   buildingAssetPool: {fileID: 11400000, guid: a7d46fdc24f3b7144aec7cf82218931b, type: 2}

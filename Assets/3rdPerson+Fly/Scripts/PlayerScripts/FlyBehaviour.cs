@@ -104,7 +104,6 @@ public class FlyBehaviour : GenericBehaviour
         {
             speedEffectParticleSystem.Stop();
         }
-        Debug.Log("LocalFixedUpdate velocity: " + rb.linearVelocity.magnitude.ToString());
         //rb.velocity = Vector3.Lerp(rb.velocity, desiredVelocity, Time.fixedDeltaTime * velocityTransitionSpeed);
     }
 

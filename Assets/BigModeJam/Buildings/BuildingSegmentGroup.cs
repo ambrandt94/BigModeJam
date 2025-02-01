@@ -32,22 +32,27 @@ public class BuildingSegmentGroup : MonoBehaviour
         bool hitSegment = false;
         for (int i = 0; i < segments.Count; i++) {
             if (!hitSegment && segment == segments[i]) {
+                Debug.Log($"Hit segment {i}");
                 hitSegment = true;
             }
-            if (hitSegment)
-                segments[i].ToggleConstraints(false);
+            if (hitSegment) { 
+                Debug.Log($"Turn on Physics on segment {i}");
+                segments[i].TriggerDestruction();
+                //segments[i].ToggleConstraints(false);
+            }
         }
     }
 
     private void InitializeSegments()
     {
-        int num = Random.Range(1, 8);
+        int num = Random.Range(1, 14);
         Vector3 spawnPos = Vector3.zero;
         for (int i = 0; i < num; i++) {
             BuildingSegment segment = Instantiate(segmentPrefab, spawnPos, Quaternion.identity).GetComponent<BuildingSegment>();
             segment.transform.SetParent(spawnStartTransform,true);
             segment.transform.localPosition = spawnPos;
             segment.transform.localScale = Vector3.one;
+            segment.Initialize(this);
             segments.Add(segment);
             spawnPos.y += SegmentHeight;
         }
