@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: Aqua Beam
   manaCost: 0
-  cooldown: 0
+  cooldown: 1
   effectPrefab: {fileID: 0}
+  effectPrefabRemainsChild: 0
+  hasDuration: 0
   spellEffects: []
   range: 0

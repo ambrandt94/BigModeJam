@@ -26,6 +26,12 @@ public class SpellCaster : MonoBehaviour
 
     private void Update()
     {
+        if (castedSpell != null)
+            castedSpell.CastingUpdate(this);
+
+        if (this.gameObject.tag != "Player")
+            return;
+
         HandleCooldowns();
         if (Input.GetMouseButtonDown(0)) {
             CastCurrentSpell();
@@ -35,8 +41,7 @@ public class SpellCaster : MonoBehaviour
             CycleSpells((int)Input.mouseScrollDelta.y);
         }
 
-        if (castedSpell != null)
-            castedSpell.CastingUpdate(this);
+      
     }
 
     private void HandleCooldowns()
@@ -47,6 +52,19 @@ public class SpellCaster : MonoBehaviour
                 OnCooldownUpdated?.Invoke(i, Mathf.Max(0, cooldownTimers[i]));
             }
         }
+    }
+
+    public void Cast(int spellIndex, Vector3 origin, Vector3 direction)
+    {
+        if (spells == null || spells.Length == 0) return;
+        if (spellIndex < 0 || spellIndex >= spells.Length) return;
+
+        spells[spellIndex].Cast(this, origin, direction);
+    }
+
+    public bool HasSpells()
+    {
+        return spells != null && spells.Length > 0;
     }
 
     private void CastCurrentSpell()

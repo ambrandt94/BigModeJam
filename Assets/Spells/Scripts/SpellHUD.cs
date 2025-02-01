@@ -38,7 +38,7 @@ public class SpellHUD : MonoBehaviour
         cooldownSliders = new Slider[spellCaster.spells.Length];
         for (int i = 0; i < spellCaster.spells.Length; i++)
         {
-            GameObject sliderObject = Instantiate(sliderPrefab, sliderParent);
+            GameObject sliderObject = Instantiate(sliderPrefab, sliderParent);            
             Slider slider = sliderObject.GetComponent<Slider>();
             slider.minValue = 0;
             slider.maxValue = 1;
@@ -51,6 +51,7 @@ public class SpellHUD : MonoBehaviour
             }
 
             cooldownSliders[i] = slider;
+            sliderObject.SetActive(false);
         }
     }
 
@@ -58,15 +59,21 @@ public class SpellHUD : MonoBehaviour
     {
         if (spellIndex < 0 || spellIndex >= spellCaster.spells.Length) return;
         selectedSpellText.text = spellCaster.spells[spellIndex].spellName;
+        foreach (Slider slider in cooldownSliders)
+        {
+            slider.gameObject.SetActive(false);
+        }
+        cooldownSliders[spellIndex].gameObject.SetActive(true);
     }
 
     private void UpdateCooldownSlider(int spellIndex, float cooldownTime)
     {
         if (spellIndex < 0 || spellIndex >= cooldownSliders?.Length) return;
         cooldownSliders[spellIndex].value = cooldownTime / spellCaster.spells[spellIndex].cooldown;
-        if(cooldownSliders[spellIndex]?.value == 0)
+        if (cooldownSliders[spellIndex].value <= 0)
         {
-            Destroy(cooldownSliders[spellIndex]?.gameObject);
+            cooldownSliders[spellIndex].value = 0;
+            cooldownSliders[spellIndex].gameObject.SetActive(false);
         }
     }
 }

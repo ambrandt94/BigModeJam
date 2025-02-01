@@ -20,4 +20,4 @@ MonoBehaviour:
   hasDuration: 0
   spellEffects:
   - {fileID: 11400000, guid: 8223afe481cfc88459fbe0d5d8d1d648, type: 2}
-  range: 200
+  range: 20000

@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: Cone of Cold
   manaCost: 0
-  cooldown: 0
+  cooldown: 1
   effectPrefab: {fileID: 7518399095256348770, guid: 6e095ceca8a798c479f1027e2eb5ce26, type: 3}
+  effectPrefabRemainsChild: 0
+  hasDuration: 0
   spellEffects:
   - {fileID: 11400000, guid: ac4d46bf5bc865e4fa00ae3005545e95, type: 2}
   - {fileID: 11400000, guid: 28f1c95772dcdf34c812c6a225bf7f38, type: 2}
