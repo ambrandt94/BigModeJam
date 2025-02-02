@@ -35,6 +35,11 @@ public class FlyBehaviour : GenericBehaviour
     private bool isBursting;
     private float burstTimer;
 
+    public LayerMask groundLayers; // Assign ground layers in the Inspector
+    public SpellCaster spellcaster; // Assign the spellcaster component in the Inspector
+    public BaseSpell groundCollisionSpell;
+
+
     // Start is always called after any Awake functions.
     void Start()
     {
@@ -51,20 +56,7 @@ public class FlyBehaviour : GenericBehaviour
         if (Input.GetButtonDown(flyButton) && !behaviourManager.IsOverriding()
             && !behaviourManager.GetTempLockStatus(behaviourManager.GetDefaultBehaviour))
         {
-            fly = !fly;
-            behaviourManager.UnlockTempBehaviour(behaviourManager.GetDefaultBehaviour);
-            rb.useGravity = !fly;
-
-            if (fly)
-            {
-                behaviourManager.RegisterBehaviour(this.behaviourCode);
-            }
-            else
-            {
-                col.direction = 1;
-                behaviourManager.GetCamScript.ResetTargetOffsets();
-                behaviourManager.UnregisterBehaviour(this.behaviourCode);
-            }
+            ToggleFly();
         }
 
         fly = fly && behaviourManager.IsCurrentBehaviour(this.behaviourCode);
@@ -82,6 +74,24 @@ public class FlyBehaviour : GenericBehaviour
             {
                 isBouncing = false;
             }
+        }
+    }
+
+    private void ToggleFly()
+    {
+        fly = !fly;
+        behaviourManager.UnlockTempBehaviour(behaviourManager.GetDefaultBehaviour);
+        rb.useGravity = !fly;
+
+        if (fly)
+        {
+            behaviourManager.RegisterBehaviour(this.behaviourCode);
+        }
+        else
+        {
+            col.direction = 1;
+            behaviourManager.GetCamScript.ResetTargetOffsets();
+            behaviourManager.UnregisterBehaviour(this.behaviourCode);
         }
     }
 
@@ -243,32 +253,49 @@ public class FlyBehaviour : GenericBehaviour
         float impactSpeed = collision.relativeVelocity.magnitude;
         Vector3 collisionNormal = collision.contacts[0].normal;
 
-        if (impactSpeed > collisionDamageThresholdSpeed)
+        // 1. Ground Collision and Spell Cast: (This remains separate)
+        if (((1 << collision.gameObject.layer) & groundLayers) != 0 && impactSpeed > bounceThresholdSpeed)
         {
-            GetComponent<Animator>().Play("Flying Collision");
-            collisionCooldownTimer = collisionImpactCooldown;
-
-            if (((1 << collision.gameObject.layer) & destructibleLayers) != 0)
+            if (spellcaster != null)
             {
-
-                if (collision.gameObject.GetComponentInParent<Destructible>() != null)
-                {
-                    collision.gameObject.GetComponentInParent<Destructible>().ApplyDamage(50);
-                    //desiredVelocity *= slowDownFactor;
-                }               
-
+                spellcaster.Cast(groundCollisionSpell, transform.position, transform.forward.normalized);
+                ToggleFly();
+                return;
             }
             else
             {
+                Debug.LogWarning("Spellcaster not assigned in FlyBehaviour!");
+            }
+            return; // Early exit to prevent ground collision from also triggering a bounce.
+        }
+
+        // 2. Bounce Logic (Simplified and Corrected):
+        if (((1 << collision.gameObject.layer) & destructibleLayers) != 0)
+        {
+            // Destructible object: Apply damage (no bounce).
+            if (collision.gameObject.GetComponentInParent<Destructible>() != null)
+            {
+                collision.gameObject.GetComponentInParent<Destructible>().ApplyDamage(50);
+            }
+
+            if (collision.gameObject.GetComponentInParent<Rigidbody>() != null &&
+                 collision.gameObject.GetComponentInParent<Rigidbody>().mass > rb.mass &&
+                 impactSpeed > bounceThresholdSpeed) // Add speed check here
+            {
+                // Non-destructible object with sufficient mass: Bounce.
                 HandleBounce(collision, impactSpeed, collisionNormal);
             }
         }
-        else
+        else if (collision.gameObject.GetComponentInParent<Rigidbody>() != null &&
+                 collision.gameObject.GetComponentInParent<Rigidbody>().mass > rb.mass &&
+                 impactSpeed > bounceThresholdSpeed) // Add speed check here
         {
-            GetComponent<Animator>().Play("Flying Collision");
+            // Non-destructible object with sufficient mass: Bounce.
             HandleBounce(collision, impactSpeed, collisionNormal);
-
         }
+        // Optionally, you could add an 'else' block here to handle collisions with
+        // objects that don't have rigidbodies, or that have a mass less than
+        // the player's mass, if you needed to do something specific in those cases.
     }
 
     private void HandleBounce(Collision collision, float impactSpeed, Vector3 collisionNormal)
