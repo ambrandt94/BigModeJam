@@ -1,3 +1,4 @@
+using BigModeJam;
 using ChainLink.Core;
 using Sirenix.OdinInspector;
 using System;
@@ -16,10 +17,17 @@ public class WorldGenerator : MonoBehaviour
         tileMap.Generate();
     }
 
+    private void FinishGeneration()
+    {
+        OnFinished?.Invoke();
+        NPCManager.Instance.FindCharacterTravelPoints();
+        NPCManager.Instance.AllRandom();
+    }
+
     private void Awake()
     {
         tileMap = GetComponent<WorldTileGenerator>();
-        tileMap.OnFinished += () => { OnFinished.Invoke(); };
+        tileMap.OnFinished += FinishGeneration;
     }
 }
 

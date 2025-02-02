@@ -418,7 +418,7 @@ MonoBehaviour:
     healthPercent: 20
     hasError: 0
     visibleDamageLevel: 8
-  destroyedPrefab: {fileID: 0}
+  destroyedPrefab: {fileID: 8630414766696018066, guid: 96d57ee7daee2e949b856ee71f1f5f86, type: 3}
   destroyedPrefabParent: {fileID: 0}
   fallbackParticle: {fileID: 19800004, guid: 6b46cad447c64dd48b8b715df6e3d2ad, type: 3}
   fallbackParticleMatOption: 0
