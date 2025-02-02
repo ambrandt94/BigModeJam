@@ -28,6 +28,13 @@ public class FlyBehaviour : GenericBehaviour
 
     [SerializeField] private ParticleSystem speedEffectParticleSystem;
 
+    public float burstSpeedMultiplier = 1.5f; // Multiplier for burst speed
+    public float burstDuration = 0.5f;
+    public GameObject burstEffect; // Assign your burst effect GameObject in the Inspector
+
+    private bool isBursting;
+    private float burstTimer;
+
     // Start is always called after any Awake functions.
     void Start()
     {
@@ -76,8 +83,9 @@ public class FlyBehaviour : GenericBehaviour
                 isBouncing = false;
             }
         }
-    }  
-   
+    }
+
+    private bool burstInput;
 
     public override void LocalFixedUpdate()
     {
@@ -104,14 +112,33 @@ public class FlyBehaviour : GenericBehaviour
         {
             speedEffectParticleSystem.Stop();
         }
+        burstInput = Input.GetKeyDown(KeyCode.LeftShift);
+        HandleBurst(); // Call burst handling method
         //rb.velocity = Vector3.Lerp(rb.velocity, desiredVelocity, Time.fixedDeltaTime * velocityTransitionSpeed);
     }
 
     void FlyManagement(float horizontal, float vertical)
     {
         Vector3 direction = Rotating(horizontal, vertical);
-        float speed = flySpeed * (behaviourManager.IsSprinting() ? sprintFactor : 1);
+        float speed = flySpeed;
+
         if (behaviourManager.IsSprinting())
+        {
+            if (!isBursting && burstInput)
+            {
+                StartBurst();
+            }
+
+            if (isBursting)
+            {
+                speed *= burstSpeedMultiplier;
+            }
+        }
+
+        desiredVelocity = direction * speed;
+
+        // Existing code for particle effect
+        if (rb.linearVelocity.magnitude >= collisionDamageThresholdSpeed)
         {
             speedEffectParticleSystem.Stop();
             speedEffectParticleSystem.Play();
@@ -120,7 +147,33 @@ public class FlyBehaviour : GenericBehaviour
         {
             speedEffectParticleSystem.Stop();
         }
-        desiredVelocity = direction * speed;
+    }
+
+    private void HandleBurst()
+    {
+        if (isBursting)
+        {
+            burstTimer -= Time.deltaTime;
+
+            if (burstTimer <= 0)
+            {
+                EndBurst();
+            }
+        }
+    }
+
+    private void StartBurst()
+    {
+        isBursting = true;
+        burstTimer = burstDuration;       
+        burstEffect.GetComponent<ParticleSystem>().Stop();
+        burstEffect.GetComponent<ParticleSystem>().Play(); // Assuming you have a Particle System
+    }
+
+    private void EndBurst()
+    {
+        isBursting = false;
+        burstEffect.GetComponent<ParticleSystem>().Stop();       
     }
 
     Vector3 Rotating(float horizontal, float vertical)

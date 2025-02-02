@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "Spells/BaseSpell")]
 public abstract class BaseSpell : ScriptableObject, ISpell
@@ -11,6 +9,8 @@ public abstract class BaseSpell : ScriptableObject, ISpell
     public GameObject effectPrefab;
     public bool effectPrefabRemainsChild;
     public bool hasDuration;
+    public Sprite icon;
+    public string description;
    
     public ScriptableObject[] spellEffects;
 
