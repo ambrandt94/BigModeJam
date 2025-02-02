@@ -1,11 +1,12 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SpellTooltipUI : MonoBehaviour
 {
-    public Text spellNameText;
-    public Text spellDescriptionText;
+    public TextMeshProUGUI spellNameText;
+    public TextMeshProUGUI spellDescriptionText;
     public Image spellIcon;
 
     private RectTransform rectTransform;
@@ -20,8 +21,8 @@ public class SpellTooltipUI : MonoBehaviour
 
     void Update()
     {
-        Vector2 mousePos = Input.mousePosition;
-        rectTransform.position = mousePos + new Vector2(10f, -10f); // Slight offset from cursor
+        //Vector2 mousePos = Input.mousePosition;
+        //rectTransform.position = mousePos + new Vector2(10f, -10f); // Slight offset from cursor
     }
 
     public void ShowTooltip(BaseSpell spell)

@@ -3,15 +3,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SpellHotbarSlot : MonoBehaviour, IDropHandler
+public class SpellHotbarSlot : MonoBehaviour, IPointerClickHandler
 {
     public int slotIndex;
     public Image icon;
-    private SpellCaster spellCaster;
+    public SpellCaster spellCaster;
+    private SpellHotbarUI spellHotbarUI; // Direct reference
+    SpellMenuUI spellMenu;
+
 
     private void Start()
-    {
-        spellCaster = FindObjectOfType<SpellCaster>();
+    {        
+        spellHotbarUI = FindObjectOfType<SpellHotbarUI>(); // Get reference to SpellHotbarUI
+        spellMenu = FindObjectOfType<SpellMenuUI>(); // Or better, store a reference
     }
 
     public void SetSpell(BaseSpell newSpell)
@@ -19,11 +23,23 @@ public class SpellHotbarSlot : MonoBehaviour, IDropHandler
         spellCaster.SetSpellInHotbar(slotIndex, newSpell);
     }
 
-    public void OnDrop(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        SpellDragItem droppedItem = eventData.pointerDrag?.GetComponent<SpellDragItem>();
-        if (droppedItem == null) return;
+        Debug.Log("Clicked on hotbar slot index " +  slotIndex);       
+        if (spellMenu != null && spellMenu.selectedSpell != null)
+        {
+            spellCaster.SetSpellInHotbar(slotIndex, spellMenu.selectedSpell);
 
-        spellCaster.SwapSpells(slotIndex, droppedItem.slotIndex);
+            if (spellHotbarUI != null) // Use the direct reference
+            {
+                spellHotbarUI.UpdateHotbar(); // Call the UpdateHotbar function in SpellHotbarUI
+            }
+            else
+            {
+                Debug.LogError("SpellHotbarUI not found in parent!"); // Debug if not found
+            }
+
+            spellMenu.DeselectSpell(); // Deselect after equipping
+        }
     }
 }

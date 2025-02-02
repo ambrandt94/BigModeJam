@@ -10,12 +10,12 @@ public class SpellDragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void Start()
     {
-        spellCaster = FindObjectOfType<SpellCaster>();
+        //spellCaster = FindObjectOfType<SpellCaster>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (spellCaster.hotbarSpells[slotIndex] == null) return;
+        if (spellCaster?.hotbarSpells[slotIndex] == null) return;
 
         originalParent = transform.parent;
         placeholder = new GameObject("Placeholder");
@@ -42,7 +42,7 @@ public class SpellDragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
             if (targetSlot != null)
             {
-                spellCaster.SwapSpells(slotIndex, targetSlot.slotIndex);
+                spellCaster?.SwapSpells(slotIndex, targetSlot.slotIndex);
             }
         }
 

@@ -29,16 +29,24 @@ public class ControlsTutorial : MonoBehaviour
 		gamepadCommands = this.transform.Find("ScreenHUD/Gamepad").gameObject;
 	}
 
-	void Update()
+	public SpellMenuUI spellMenuUI = null;
+    void Update()
 	{
 		if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
 		{
-			Cursor.lockState = CursorLockMode.Locked;
-			Cursor.visible = false;
+			if (spellMenuUI == null) {
+				spellMenuUI = FindFirstObjectByType<SpellMenuUI>();
+
+            }
+			if (spellMenuUI != null && !spellMenuUI.IsMenuOpen())
+			{
+				Cursor.lockState = CursorLockMode.Locked;
+				Cursor.visible = false;
+			}
 		}
 		if (Input.GetKeyDown("escape"))
 		{
-			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.lockState = CursorLockMode.Confined;
 			Cursor.visible = true;
 		}
 		keyboardCommands.SetActive(Input.GetKey(KeyCode.F2));
