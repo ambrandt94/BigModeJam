@@ -18,6 +18,8 @@ MonoBehaviour:
   effectPrefab: {fileID: 6972713332440678516, guid: 3ac1b5079f10443409a6bb9ad00aa5e7, type: 3}
   effectPrefabRemainsChild: 0
   hasDuration: 0
+  icon: {fileID: 21300000, guid: f14a2d46ec155e34290975ce1767f978, type: 3}
+  description: 
   spellEffects:
   - {fileID: 11400000, guid: 6e109cf9c3f17e24d980a72c2bb969d7, type: 2}
   range: 3000
