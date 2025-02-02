@@ -112,3 +112,15 @@ MonoBehaviour:
     - Resizable
     sceneGUID: 
     localIdentifier: 0
+  - type: 1
+    actualReference: {fileID: 102900000, guid: 448cd041c552d20498ddec03cc813151, type: 3}
+    cachedDrawData:
+      Name: Main Scenarios Scene
+      Icon: {fileID: 985423054452513129, guid: 0000000000000000d000000000000000, type: 0}
+      SceneData:
+        IsScene: 1
+        Scene: {fileID: 102900000, guid: 448cd041c552d20498ddec03cc813151, type: 3}
+    cachedTypes:
+    - SceneAsset
+    sceneGUID: 
+    localIdentifier: 0

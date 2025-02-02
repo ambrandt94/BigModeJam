@@ -1,10 +1,12 @@
 ﻿using ChainLink.Core;
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BigModeJam
 {
     public class  NPCManager : Singleton<NPCManager> {
+        public List<RagdollMaker.Bone> DefaultBones;
         [SerializeField,ReadOnly]
         private GameObject[] characterTravelPoints;
 

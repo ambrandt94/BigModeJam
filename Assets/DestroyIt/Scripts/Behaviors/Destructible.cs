@@ -17,35 +17,32 @@ namespace DestroyIt
         [SerializeField]
         public bool TrackMe = true;
         public static List<Destructible> AllTrackedDestructibles { get; private set; } = new List<Destructible>();
-        public float TotalHitPoints
-        {
+        public float TotalHitPoints {
             get { return _totalHitPoints; }
-            set
-            {
+            set {
                 _totalHitPoints = value;
                 damageLevels.CalculateDamageLevels(_totalHitPoints);
             }
         }
 
-        public float CurrentHitPoints
-        {
+        public float CurrentHitPoints {
             get { return _currentHitPoints; }
             set { _currentHitPoints = value; }
         }
 
         [SerializeField]
         [FormerlySerializedAs("totalHitPoints")]
-        [HideInInspector] 
+        [HideInInspector]
         private float _totalHitPoints = 50f;
 
         [SerializeField]
         [FormerlySerializedAs("currentHitPoints")]
-        [HideInInspector] 
+        [HideInInspector]
         private float _currentHitPoints = 50f;
-        
+
         [HideInInspector] public List<DamageLevel> damageLevels;
-	    [HideInInspector] public GameObject destroyedPrefab;
-	    [HideInInspector] public GameObject destroyedPrefabParent;
+        [HideInInspector] public GameObject destroyedPrefab;
+        [HideInInspector] public GameObject destroyedPrefabParent;
         [HideInInspector] public ParticleSystem fallbackParticle;
         [HideInInspector] public int fallbackParticleMatOption;
         [HideInInspector] public List<DamageEffect> damageEffects;
@@ -109,6 +106,7 @@ namespace DestroyIt
         public event Action DamagedEvent;
         public event Action DestroyedEvent;
         public event Action RepairedEvent;
+        public event Action<Rigidbody> DestroyedByRigidBodyImpactEvent;
 
 
         private void OnEnable()
@@ -133,8 +131,7 @@ namespace DestroyIt
             _rigidBody = GetComponent<Rigidbody>();
 
             // Only calculate the mesh center point if the destructible object uses a fallback particle.
-            if (useFallbackParticle)
-            {
+            if (useFallbackParticle) {
                 MeshRenderer[] meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
                 MeshCenterPoint = gameObject.GetMeshCenterPoint(meshRenderers);
                 if (gameObject.IsAnyMeshPartOfStaticBatch(meshRenderers) && centerPointOverride == Vector3.zero)
@@ -151,7 +148,7 @@ namespace DestroyIt
             // If AutoPool is turned on, add the destroyed prefab to the ObjectPool.
             if (autoPoolDestroyedPrefab)
                 ObjectPool.Instance.AddDestructibleObjectToPool(this);
-            
+
             _isInitialized = true;
         }
 
@@ -169,8 +166,7 @@ namespace DestroyIt
             // Use the fixed update position/rotation for placement of the destroyed prefab.
             PositionFixedUpdate = transform.position;
             RotationFixedUpdate = transform.rotation;
-            if (_rigidBody != null)
-            {
+            if (_rigidBody != null) {
                 VelocityFixedUpdate = _rigidBody.linearVelocity;
                 AngularVelocityFixedUpdate = _rigidBody.angularVelocity;
             }
@@ -183,8 +179,8 @@ namespace DestroyIt
                 UpdateDeactivation(destructionManager.deactivateAfter);
             else if (destructionManager.autoDeactivateDestructibleTerrainObjects && isTerrainTree && shouldDeactivate)
                 UpdateDeactivation(destructionManager.deactivateAfter);
-            
-            if (IsDestroyed) 
+
+            if (IsDestroyed)
                 destructionManager.ProcessDestruction(this, destroyedPrefab, new ExplosiveDamage());
 
             // If this is the first fixed update frame and autoDeativateDestructibles is true, start this component deactivated.
@@ -196,13 +192,11 @@ namespace DestroyIt
 
         private void UpdateDeactivation(float deactivateAfter)
         {
-            if (_deactivateTimer > deactivateAfter)
-            {
+            if (_deactivateTimer > deactivateAfter) {
                 _deactivateTimer = 0f;
                 shouldDeactivate = false;
                 enabled = false;
-            }
-            else
+            } else
                 _deactivateTimer += Time.fixedDeltaTime;
         }
 
@@ -212,8 +206,7 @@ namespace DestroyIt
             if (IsDestroyed || _isInvulnerable || !DestructionManager.Instance.allowDamage) return; // don't try to apply damage to an already-destroyed or invulnerable object, or if damaging object is not allowed.
 
             // Adjust the damage based on Min/Max/Time thresholds.
-            if (limitDamage)
-            {
+            if (limitDamage) {
                 if (LastDamagedTime > 0f && minDamageTime > 0f && Time.time < LastDamagedTime + minDamageTime)
                     return;
 
@@ -241,7 +234,7 @@ namespace DestroyIt
             PlayDamageEffects();
 
             if (IsDestroyed)
-                DestructionManager.Instance.ProcessDestruction(this, destroyedPrefab, new DirectDamage{DamageAmount = amount});
+                DestructionManager.Instance.ProcessDestruction(this, destroyedPrefab, new DirectDamage { DamageAmount = amount });
         }
 
         public void ApplyDamage(Damage damage)
@@ -249,8 +242,7 @@ namespace DestroyIt
             if (IsDestroyed || _isInvulnerable || !DestructionManager.Instance.allowDamage) return; // don't try to apply damage to an already-destroyed or invulnerable object, or if damaging object is not allowed.
 
             // Adjust the damage based on Min/Max/Time thresholds.
-            if (limitDamage)
-            {
+            if (limitDamage) {
                 if (LastDamagedTime > 0f && minDamageTime > 0f && Time.time < LastDamagedTime + minDamageTime)
                     return;
 
@@ -281,7 +273,7 @@ namespace DestroyIt
                 DestructionManager.Instance.ProcessDestruction(this, destroyedPrefab, damage);
         }
 
-        public void RepairDamage(float amount) 
+        public void RepairDamage(float amount)
         {
             if (IsDestroyed || !canBeRepaired) return; // object cannot be repaired if it is either already destroyed or not repairable.
 
@@ -323,13 +315,11 @@ namespace DestroyIt
             _currentDamageLevel = damageLevel;
             Renderer[] renderers = GetComponentsInChildren<Renderer>();
 
-            foreach (Renderer rend in renderers)
-            {
+            foreach (Renderer rend in renderers) {
                 Destructible parentDestructible = rend.GetComponentInParent<Destructible>(); // child Destructible objects should not be affected by damage on their parents.
                 if (parentDestructible != this) continue;
                 bool isAcceptableRenderer = rend is MeshRenderer || rend is SkinnedMeshRenderer;
-                if (isAcceptableRenderer && !rend.gameObject.HasTag(Tag.ClingingDebris) && rend.gameObject.layer != DestructionManager.Instance.debrisLayer)
-                {
+                if (isAcceptableRenderer && !rend.gameObject.HasTag(Tag.ClingingDebris) && rend.gameObject.layer != DestructionManager.Instance.debrisLayer) {
                     for (int j = 0; j < rend.sharedMaterials.Length; j++)
                         DestructionManager.Instance.SetProgressiveDamageTexture(rend, rend.sharedMaterials[j], _currentDamageLevel);
                 }
@@ -343,8 +333,7 @@ namespace DestroyIt
         {
             Renderer[] renderers = GetComponentsInChildren<Renderer>();
 
-            foreach (Renderer rend in renderers)
-            {
+            foreach (Renderer rend in renderers) {
                 Destructible parentDestructible = rend.GetComponentInParent<Destructible>(); // only get the material for the parent object to use for a particle effect
                 if (parentDestructible != this) continue;
                 bool isAcceptableRenderer = rend is MeshRenderer || rend is SkinnedMeshRenderer;
@@ -363,9 +352,8 @@ namespace DestroyIt
             int currentDamageLevelIndex = 0;
             if (_currentDamageLevel != null)
                 currentDamageLevelIndex = damageLevels.IndexOf(_currentDamageLevel); // FindIndex(a => a == currentDamageLevel);
-            
-            foreach (DamageEffect effect in damageEffects)
-            {
+
+            foreach (DamageEffect effect in damageEffects) {
                 if (effect == null || effect.Prefab == null) continue;
 
                 // Get rotation
@@ -377,32 +365,23 @@ namespace DestroyIt
                 if (effect.HasTagDependency && !gameObject.HasTag(effect.TagDependency))
                     continue;
 
-                if (_currentDamageLevel != null && effect.TriggeredAt < damageLevels.Count)
-                {
+                if (_currentDamageLevel != null && effect.TriggeredAt < damageLevels.Count) {
                     // TURN ON pre-destruction damage effects
-                    if (currentDamageLevelIndex >= effect.TriggeredAt && !effect.HasStarted)
-                    {
-                        if (effect.GameObject != null)
-                        {
-                            for (int i = 0; i < effect.ParticleSystems.Length; i++)
-                            {
+                    if (currentDamageLevelIndex >= effect.TriggeredAt && !effect.HasStarted) {
+                        if (effect.GameObject != null) {
+                            for (int i = 0; i < effect.ParticleSystems.Length; i++) {
                                 ParticleSystem.EmissionModule emission = effect.ParticleSystems[i].emission;
                                 emission.enabled = true;
                             }
-                        }
-                        else
-                        {
+                        } else {
                             // set parent to this destructible object and play
                             effect.GameObject = ObjectPool.Instance.Spawn(effect.Prefab, effect.Offset, rotation, transform);
 
-                            if (effect.GameObject != null)
-                            {
+                            if (effect.GameObject != null) {
                                 effect.ParticleSystems = effect.GameObject.GetComponentsInChildren<ParticleSystem>();
 
-                                if (effect.Scale != Vector3.one)
-                                {
-                                    foreach (ParticleSystem ps in effect.ParticleSystems)
-                                    {
+                                if (effect.Scale != Vector3.one) {
+                                    foreach (ParticleSystem ps in effect.ParticleSystems) {
                                         var main = ps.main;
                                         main.scalingMode = ParticleSystemScalingMode.Hierarchy;
                                     }
@@ -416,12 +395,9 @@ namespace DestroyIt
                     }
 
                     // TURN OFF pre-destruction damage effects
-                    if (currentDamageLevelIndex < effect.TriggeredAt && effect.HasStarted)
-                    {
-                        if (effect.GameObject != null)
-                        {
-                            for (int i = 0; i < effect.ParticleSystems.Length; i++)
-                            {
+                    if (currentDamageLevelIndex < effect.TriggeredAt && effect.HasStarted) {
+                        if (effect.GameObject != null) {
+                            for (int i = 0; i < effect.ParticleSystems.Length; i++) {
                                 ParticleSystem.EmissionModule emission = effect.ParticleSystems[i].emission;
                                 emission.enabled = false;
                             }
@@ -432,20 +408,16 @@ namespace DestroyIt
                 }
 
                 // Destroyed effects
-                if (effect.TriggeredAt == damageLevels.Count && IsDestroyed && !effect.HasStarted)
-                {
-                    effect.GameObject = canBeDestroyed ? 
-                        ObjectPool.Instance.Spawn(effect.Prefab, transform.TransformPoint(effect.Offset), rotation) : 
+                if (effect.TriggeredAt == damageLevels.Count && IsDestroyed && !effect.HasStarted) {
+                    effect.GameObject = canBeDestroyed ?
+                        ObjectPool.Instance.Spawn(effect.Prefab, transform.TransformPoint(effect.Offset), rotation) :
                         ObjectPool.Instance.Spawn(effect.Prefab, effect.Offset, rotation, transform);
 
-                    if (effect.GameObject != null)
-                    {
+                    if (effect.GameObject != null) {
                         effect.ParticleSystems = effect.GameObject.GetComponentsInChildren<ParticleSystem>();
 
-                        if (effect.Scale != Vector3.one)
-                        {
-                            foreach (ParticleSystem ps in effect.ParticleSystems)
-                            {
+                        if (effect.Scale != Vector3.one) {
+                            foreach (ParticleSystem ps in effect.ParticleSystems) {
                                 var main = ps.main;
                                 main.scalingMode = ParticleSystemScalingMode.Hierarchy;
                             }
@@ -466,13 +438,25 @@ namespace DestroyIt
             if (!isActiveAndEnabled) return;
 
             this.ProcessDestructibleCollision(collision, GetComponent<Rigidbody>());
-            
+
             if (collision.contacts.Length <= 0) return;
-            
+
             Destructible destructibleObj = collision.contacts[0].otherCollider.gameObject.GetComponentInParent<Destructible>();
             if (destructibleObj != null && collision.contacts[0].otherCollider.attachedRigidbody == null)
                 destructibleObj.ProcessDestructibleCollision(collision, GetComponent<Rigidbody>());
+
+            if (IsDestroyed) {
+                Debug.Log("Destroyed... looking for culprit.");
+                Rigidbody body = collision.contacts[0].otherCollider.attachedRigidbody;
+                if (body != null) {
+                    Debug.Log($"{gameObject.name} destroyed by {body.gameObject.name}");
+                    DestroyedByRigidBodyImpactEvent?.Invoke(body);
+                } else {
+                    Debug.Log($"No Ridigbody. Destroyed by {collision.contacts[0].otherCollider.gameObject.name}");
+                }
+            }
         }
+
 
         // NOTE: OnDrawGizmos will only fire if Gizmos are turned on in the Unity Editor!
         public void OnDrawGizmos()
