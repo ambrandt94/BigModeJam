@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [CreateAssetMenu(menuName = "Spells/ProjectileShape")]
 public class ProjectileShape : BaseSpell
@@ -12,7 +13,7 @@ public class ProjectileShape : BaseSpell
         {
 
             // 1. Calculate the base rotation (same as before)
-            Quaternion baseRotation = Quaternion.LookRotation(direction);
+            Quaternion baseRotation = Quaternion.LookRotation(Camera.main.transform.forward);
 
             // 2. Apply the capsule's initial rotation offset
             //    This assumes your capsule's long axis is along the Z-axis in its prefab.
@@ -35,7 +36,8 @@ public class ProjectileShape : BaseSpell
 
             if (rb)
             {
-                rb.linearVelocity = direction * speed;
+                rb.linearVelocity = Camera.main.transform.forward.normalized * speed;
+                //transform.position += direction * speed * Time.deltaTime;
             }
 
             var spellEffectComponent = projectile.AddComponent<SpellEffectHandler>();

@@ -154,7 +154,6 @@ MonoBehaviour:
   spellEffects:
   - {fileID: 11400000, guid: 05502d74d370eeb498915770310ddfa5, type: 2}
   - {fileID: 11400000, guid: d59c913f00d50ff44a2da827b744dcd8, type: 2}
-  - {fileID: 11400000, guid: 15d66c80f0e7a434fb8dc8e7e52fd4f6, type: 2}
   areaEffectPrefab: {fileID: 1279125013800246, guid: d25631b69b059d64385ac05f70824713, type: 3}
   delayBeforeEffect: 0
 --- !u!1001 &299210113464207335

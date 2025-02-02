@@ -9,6 +9,7 @@ TagManager:
   - Destructible
   - NPCSpawn
   - TravelPoint
+  - HotbarSlot
   layers:
   - Default
   - TransparentFX

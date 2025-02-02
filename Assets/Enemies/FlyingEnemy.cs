@@ -10,14 +10,17 @@ public class FlyingEnemy : MonoBehaviour
     public AttackBehavior attackBehavior;
     public DetectionSystem detectionSystem;
     public TakeoffBehavior takeoffBehavior;  
+    public TelekineticDestroyerBehavior telekineticDestroyerBehavior;
 
-    public enum State { Patrolling, Chasing, Attacking, Destroying, TakingOff }
+    public enum State { Patrolling, Chasing, Attacking, Destroying, Lifting, TakingOff }
     public State currentState = State.Patrolling;
 
     private Transform playerTarget;
     private Destructible destructibleTarget;
 
     public event System.Action<FlyingEnemy> OnDestroyed;
+    public bool DestroyOnImpact = false;
+    public float ImpactDamageToDestructibles = 200f;
 
     private void OnDestroy()
     {
@@ -26,7 +29,7 @@ public class FlyingEnemy : MonoBehaviour
 
     private void Start()
     {
-        if (!takeoffBehavior.CheckTakeoff(this))
+        if (takeoffBehavior != null && !takeoffBehavior.CheckTakeoff(this))
         {
             SwitchState(State.TakingOff);
         }
@@ -41,13 +44,16 @@ public class FlyingEnemy : MonoBehaviour
         switch (currentState)
         {
             case State.Patrolling:
-                if (FindPlayerTarget()) SwitchState(State.Chasing);
-                else if (FindDestructibleTarget()) SwitchState(State.Destroying);
+                if (chaseBehavior != null && FindPlayerTarget()) SwitchState(State.Chasing);
+                else if (FindDestructibleTarget(out bool canBeLifted))
+                {
+                    SwitchState(canBeLifted ? State.Lifting : State.Destroying);
+                }
                 break;
 
             case State.Chasing:
                 chaseBehavior.Chase();
-                if (attackBehavior.CanAttack(playerTarget)) SwitchState(State.Attacking);
+                if (attackBehavior != null && attackBehavior.CanAttack(playerTarget)) SwitchState(State.Attacking);
                 else if (!detectionSystem.CanSeePlayer()) SwitchState(State.Patrolling);
                 break;
 
@@ -62,17 +68,46 @@ public class FlyingEnemy : MonoBehaviour
                 {
                     SwitchState(State.Patrolling);
                 }
-                else if (attackBehavior.CanAttack(destructibleTarget.transform))
+                else if (attackBehavior != null && attackBehavior.CanAttack(destructibleTarget.transform))
                 {
                     attackBehavior.Attack(destructibleTarget.transform);
                 }
                 break;
 
+            case State.Lifting:
+                if (!telekineticDestroyerBehavior.IsThrowing())
+                {
+                    destructibleTarget = telekineticDestroyerBehavior.FindSuitableDestructible();
+                    telekineticDestroyerBehavior.TryToLift(destructibleTarget);
+                }
+                else if(telekineticDestroyerBehavior.IsThrowing())
+                {
+                    break;
+                }
+                else
+                {
+                    SwitchState(State.Patrolling); // If failed, return to patrol
+                }
+                break;
             case State.TakingOff:
                 takeoffBehavior.PerformTakeoff();
                 if (takeoffBehavior.HasTakenOff) SwitchState(State.Patrolling);
                 break;
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<Destructible>() != null)
+        {
+            Destructible collidedDestructible = collision.gameObject.GetComponent<Destructible>();
+            collidedDestructible.ApplyDamage(ImpactDamageToDestructibles);
+        }
+        if (this.GetComponent<Destructible>() != null) {
+            Destructible thisDestructible = this.GetComponent<Destructible>();
+            thisDestructible.ApplyDamage(thisDestructible.CurrentHitPoints);
+        }
+
     }
 
     private void SwitchState(State newState)
@@ -101,8 +136,9 @@ public class FlyingEnemy : MonoBehaviour
         return false;
     }
 
-    private bool FindDestructibleTarget()
+    private bool FindDestructibleTarget(out bool canBeLifted)
     {
+        canBeLifted = false;
         if (Destructible.AllTrackedDestructibles.Count == 0) return false;
 
         List<Destructible> validTargets = Destructible.AllTrackedDestructibles
@@ -111,8 +147,15 @@ public class FlyingEnemy : MonoBehaviour
 
         if (validTargets.Count > 0)
         {
-            destructibleTarget = validTargets.OrderBy(d => Vector3.Distance(transform.position, d.transform.position)).First();
-            return true;
+            destructibleTarget = validTargets
+                .OrderBy(d => Vector3.Distance(transform.position, d.transform.position))
+                .FirstOrDefault();
+
+            if (destructibleTarget != null)
+            {
+                canBeLifted = telekineticDestroyerBehavior != null && telekineticDestroyerBehavior.CanBeLifted(destructibleTarget);
+                return true;
+            }
         }
 
         return false;

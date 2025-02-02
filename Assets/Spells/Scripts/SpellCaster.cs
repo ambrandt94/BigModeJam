@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEditor.Experimental.GraphView;
 
 public class SpellCaster : MonoBehaviour
 {
@@ -8,7 +9,9 @@ public class SpellCaster : MonoBehaviour
     public Transform spellOrigin;
     public Transform aimTransform;
     public BaseSpell[] spells;
+    public BaseSpell[] hotbarSpells; // The active spells on hotbar
     public float mana = 100f;
+    
 
     private BaseSpell castedSpell;
 
@@ -18,9 +21,20 @@ public class SpellCaster : MonoBehaviour
     public event Action<int> OnSpellSelected; // Event for spell selection
     public event Action<int, float> OnCooldownUpdated; // Event for cooldown updates
 
+    public Action OnHotbarUpdated; // UI event for updating the hotbar
+
     private void Start()
     {
         cooldownTimers = new float[spells.Length];
+
+        // Initialize with the first 4 spells
+        for (int i = 0; i < hotbarSpells?.Length; i++)
+        {
+            if (i < spells.Length) hotbarSpells[i] = spells[i];
+            OnHotbarUpdated.Invoke();
+        }
+
+      
 
     }
 
@@ -33,15 +47,21 @@ public class SpellCaster : MonoBehaviour
             return;
 
         HandleCooldowns();
-        if (Input.GetMouseButtonDown(0)) {
-            CastCurrentSpell();
-        }
-
-        if (Input.mouseScrollDelta.y != 0) {
-            CycleSpells((int)Input.mouseScrollDelta.y);
-        }
-
       
+            for (int i = 0; i < hotbarSpells.Length; i++)
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha1 + i) && hotbarSpells[i] != null)
+                {
+                    Cast(i, spellOrigin.position, transform.forward);
+                }
+            }
+        
+
+        //if (Input.mouseScrollDelta.y != 0) {
+        //    CycleSpells((int)Input.mouseScrollDelta.y);
+        //}
+
+
     }
 
     private void HandleCooldowns()
@@ -54,12 +74,18 @@ public class SpellCaster : MonoBehaviour
         }
     }
 
-    public void Cast(int spellIndex, Vector3 origin, Vector3 direction)
+    //public void Cast(int spellIndex, Vector3 origin, Vector3 direction)
+    public void Cast(int hotbarIndex, Vector3 origin, Vector3 direction)
     {
-        if (spells == null || spells.Length == 0) return;
-        if (spellIndex < 0 || spellIndex >= spells.Length) return;
+        // Old casting logic for LMB click
+        //if (spells == null || spells.Length == 0) return;
+        //if (spellIndex < 0 || spellIndex >= spells.Length) return;
 
-        spells[spellIndex].Cast(this, origin, direction);
+        //spells[spellIndex].Cast(this, origin, direction);
+        // End Old casting logic for LMB click
+
+        if (hotbarIndex < 0 || hotbarIndex >= hotbarSpells.Length || hotbarSpells[hotbarIndex] == null) return;
+        hotbarSpells[hotbarIndex].Cast(this, origin, direction);
     }
 
     public bool HasSpells()
@@ -86,4 +112,30 @@ public class SpellCaster : MonoBehaviour
         currentSpellIndex = (currentSpellIndex + direction + spells.Length) % spells.Length;
         OnSpellSelected?.Invoke(currentSpellIndex);
     }
+
+    public void AssignSpellToHotbar(int hotbarIndex, BaseSpell spell)
+    {
+        if (hotbarIndex < 0 || hotbarIndex >= hotbarSpells.Length) return;
+        hotbarSpells[hotbarIndex] = spell;
+        OnHotbarUpdated?.Invoke(); // Notify UI to update
+    }
+
+    public void SwapSpells(int indexA, int indexB)
+    {
+        if (indexA == indexB) return;
+
+        BaseSpell temp = hotbarSpells[indexA];
+        hotbarSpells[indexA] = hotbarSpells[indexB];
+        hotbarSpells[indexB] = temp;
+
+        OnHotbarUpdated?.Invoke();       
+    }
+
+    public void SetSpellInHotbar(int index, BaseSpell newSpell)
+    {
+        Debug.Log($"Setting spell {newSpell?.name} in hotbar slot {index}");
+        hotbarSpells[index] = newSpell;
+        OnHotbarUpdated?.Invoke();
+    }
+
 }

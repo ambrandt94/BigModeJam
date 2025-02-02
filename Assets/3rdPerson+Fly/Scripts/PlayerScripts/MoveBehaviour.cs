@@ -38,7 +38,16 @@ public class MoveBehaviour : GenericBehaviour
 	public int currentSpeedPhaseNum = 0;
 	public List<SpeedPhase> speedPhases;
 
-	public void IncreaseSpeedPhase()
+    public float burstSpeedMultiplier = 1.5f; // Multiplier for burst speed
+    public float burstDuration = 0.5f;
+    public GameObject burstEffect; // Assign in the Inspector
+
+    private bool isBursting;
+    private float burstTimer;
+    private float currentSprintSpeed; // Store the current sprint speed, so we can return to it after the burst.
+
+
+    public void IncreaseSpeedPhase()
 	{
 		if (currentSpeedPhaseNum >= 3)
 			return;
@@ -92,18 +101,52 @@ public class MoveBehaviour : GenericBehaviour
 		}
 	}
 
-	// LocalFixedUpdate overrides the virtual function of the base class.
-	public override void LocalFixedUpdate()
+
+    private bool burstInput; // Track burst input separately
+                             // LocalFixedUpdate overrides the virtual function of the base class.
+    public override void LocalFixedUpdate()
 	{
 		// Call the basic movement manager.
 		MovementManagement(behaviourManager.GetH, behaviourManager.GetV);
 
 		// Call the jump manager.
 		JumpManagement();
-	}
+        burstInput = Input.GetKeyDown(KeyCode.LeftShift);
+        
+		HandleBurst(); // Call burst handling method
+		
+    }
 
-	// Execute the idle and walk/run jump movements.
-	void JumpManagement()
+    private void HandleBurst()
+    {
+        if (isBursting)
+        {
+            burstTimer -= Time.deltaTime;
+
+            if (burstTimer <= 0)
+            {
+                EndBurst();
+            }
+        }
+    }
+
+    private void StartBurst()
+    {
+        isBursting = true;
+        burstTimer = burstDuration;       
+        burstEffect.GetComponent<ParticleSystem>().Stop();
+        burstEffect.GetComponent<ParticleSystem>().Play(); // Assuming you have a Particle System
+    }
+
+    private void EndBurst()
+    {
+        isBursting = false;
+        burstEffect.GetComponent<ParticleSystem>().Stop();
+        
+    }
+
+    // Execute the idle and walk/run jump movements.
+    void JumpManagement()
 	{
 		// Start a new jump.
 		if (jump && !behaviourManager.GetAnim.GetBool(jumpBool) && behaviourManager.IsGrounded())
@@ -167,16 +210,31 @@ public class MoveBehaviour : GenericBehaviour
 		// Set proper speed.
 		Vector2 dir = new Vector2(horizontal, vertical);
 		speed = Vector2.ClampMagnitude(dir, 1f).magnitude;
-		// This is for PC only, gamepads control speed via analog stick.
-		speedSeeker += Input.GetAxis("Mouse ScrollWheel");
-		speedSeeker = Mathf.Clamp(speedSeeker, walkSpeed, runSpeed);
-		speed *= speedSeeker;
-		if (behaviourManager.IsSprinting())
-		{
-			speed = sprintSpeed;
-		}
 
-		behaviourManager.GetAnim.SetFloat(speedFloat, speed, speedDampTime, Time.deltaTime);
+
+		// This is for PC only, gamepads control speed via analog stick.
+		//speedSeeker += Input.GetAxis("Mouse ScrollWheel");
+		//speedSeeker = Mathf.Clamp(speedSeeker, walkSpeed, runSpeed
+        if (behaviourManager.IsSprinting())
+        {
+            if (!isBursting && burstInput) // Burst on sprint key press. You can change the input if you want. 
+            {
+                StartBurst();
+            }
+           
+            if (isBursting)
+            {
+                speed = sprintSpeed * burstSpeedMultiplier;
+            }
+            else
+            {
+                speed = sprintSpeed;
+            }
+
+        }
+       
+
+        behaviourManager.GetAnim.SetFloat(speedFloat, speed, speedDampTime, Time.deltaTime);
 	}
 
 	// Remove vertical rigidbody velocity.
@@ -223,7 +281,7 @@ public class MoveBehaviour : GenericBehaviour
         }
 
         // If idle, keep last known good rotation.
-        if (!(Mathf.Abs(horizontal) > 0.2f || Mathf.Abs(vertical) > 0.2f))
+        if (!behaviourManager.IsMoving())
         {
             behaviourManager.Repositioning();
         }

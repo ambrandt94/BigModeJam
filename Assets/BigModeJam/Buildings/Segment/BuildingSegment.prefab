@@ -139,7 +139,7 @@ MonoBehaviour:
   minDamage: 10
   maxDamage: 100
   minDamageTime: 0
-  ignoreCollisionsUnder: 10
+  ignoreCollisionsUnder: 5
   unparentOnDestroy: []
   disableKinematicOnUparentedChildren: 1
   replaceMaterials: []
