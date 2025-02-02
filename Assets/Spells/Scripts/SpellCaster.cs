@@ -88,6 +88,18 @@ public class SpellCaster : MonoBehaviour
         hotbarSpells[hotbarIndex].Cast(this, origin, direction);
     }
 
+    public void Cast(BaseSpell spell, Vector3 origin, Vector3 direction)
+    {
+        // Old casting logic for LMB click
+        //if (spells == null || spells.Length == 0) return;
+        //if (spellIndex < 0 || spellIndex >= spells.Length) return;
+
+        //spells[spellIndex].Cast(this, origin, direction);
+        // End Old casting logic for LMB click
+
+        spell.Cast(this, origin, direction);
+    }
+
     public bool HasSpells()
     {
         return spells != null && spells.Length > 0;
