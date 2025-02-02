@@ -18,5 +18,7 @@ MonoBehaviour:
   effectPrefab: {fileID: 2020133114420695665, guid: 331732463dd289b4e94b16b895606376, type: 3}
   effectPrefabRemainsChild: 0
   hasDuration: 0
+  icon: {fileID: 21300000, guid: 450fc28ca195a8d42804be841a41cfbf, type: 3}
+  description: 
   spellEffects: []
   speed: 100
