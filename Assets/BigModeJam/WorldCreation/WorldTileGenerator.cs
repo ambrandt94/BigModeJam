@@ -56,7 +56,7 @@ public class WorldTileGenerator : MonoBehaviour
         WorldCell cellToCollapse = tempGrid[randIndex];
 
         cellToCollapse.Collapsed = true;
-        Debug.Log($"Cell has {cellToCollapse.TileOptions.Length} options", cellToCollapse.gameObject);
+        //Debug.Log($"Cell has {cellToCollapse.TileOptions.Length} options", cellToCollapse.gameObject);
         WorldTile selectedTile = TileObjects[UnityEngine.Random.Range(0, TileObjects.Length)];
         if (cellToCollapse.TileOptions.Length > 0) {
             selectedTile = cellToCollapse.TileOptions[UnityEngine.Random.Range(0, cellToCollapse.TileOptions.Length)];

@@ -8,6 +8,7 @@ TagManager:
   - ClingPoint
   - Destructible
   - NPCSpawn
+  - TravelPoint
   layers:
   - Default
   - TransparentFX

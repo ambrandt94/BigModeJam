@@ -83,6 +83,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4053685829989093245, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
+      propertyPath: customPrefabList.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 4053685829989093245, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
+      propertyPath: 'customPrefabList.Array.data[19]'
+      value: 
+      objectReference: {fileID: 1707986758187618294, guid: d1943c846f4b19b40b1177fff5c23af9, type: 3}
+    - target: {fileID: 4053685829989093245, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
+      propertyPath: 'customPrefabList.Array.data[20]'
+      value: 
+      objectReference: {fileID: 1707986758187618294, guid: d1943c846f4b19b40b1177fff5c23af9, type: 3}
     - target: {fileID: 8864910149789149344, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
       propertyPath: m_Name
       value: SpawnPoint
@@ -145,6 +157,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4053685829989093245, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
+      propertyPath: customPrefabList.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 4053685829989093245, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
+      propertyPath: 'customPrefabList.Array.data[19]'
+      value: 
+      objectReference: {fileID: 1707986758187618294, guid: d1943c846f4b19b40b1177fff5c23af9, type: 3}
+    - target: {fileID: 4053685829989093245, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
+      propertyPath: 'customPrefabList.Array.data[20]'
+      value: 
+      objectReference: {fileID: 1707986758187618294, guid: d1943c846f4b19b40b1177fff5c23af9, type: 3}
     - target: {fileID: 8864910149789149344, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
       propertyPath: m_Name
       value: SpawnPoint (2)
@@ -207,6 +231,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4053685829989093245, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
+      propertyPath: customPrefabList.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 4053685829989093245, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
+      propertyPath: 'customPrefabList.Array.data[19]'
+      value: 
+      objectReference: {fileID: 1707986758187618294, guid: d1943c846f4b19b40b1177fff5c23af9, type: 3}
+    - target: {fileID: 4053685829989093245, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
+      propertyPath: 'customPrefabList.Array.data[20]'
+      value: 
+      objectReference: {fileID: 1707986758187618294, guid: d1943c846f4b19b40b1177fff5c23af9, type: 3}
     - target: {fileID: 8864910149789149344, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
       propertyPath: m_Name
       value: SpawnPoint (1)
@@ -269,6 +305,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4053685829989093245, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
+      propertyPath: customPrefabList.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 4053685829989093245, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
+      propertyPath: 'customPrefabList.Array.data[19]'
+      value: 
+      objectReference: {fileID: 1707986758187618294, guid: d1943c846f4b19b40b1177fff5c23af9, type: 3}
+    - target: {fileID: 4053685829989093245, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
+      propertyPath: 'customPrefabList.Array.data[20]'
+      value: 
+      objectReference: {fileID: 1707986758187618294, guid: d1943c846f4b19b40b1177fff5c23af9, type: 3}
     - target: {fileID: 8864910149789149344, guid: c5f487c5faf604845b8fcb1e3249d609, type: 3}
       propertyPath: m_Name
       value: SpawnPoint (3)
