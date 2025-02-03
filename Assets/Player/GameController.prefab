@@ -5233,7 +5233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIndex: 0
-  icon: {fileID: 0}
+  icon: {fileID: 7880359138321663218}
   spellCaster: {fileID: 0}
 --- !u!223 &3615823644620129665
 Canvas:
