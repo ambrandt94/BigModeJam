@@ -259,6 +259,7 @@ MonoBehaviour:
   attackBehavior: {fileID: 3528760687225364414}
   detectionSystem: {fileID: 6965434223532776929}
   takeoffBehavior: {fileID: 8578051002126657792}
+  telekineticDestroyerBehavior: {fileID: 0}
   currentState: 0
   DestroyOnImpact: 0
   ImpactDamageToDestructibles: 200
@@ -289,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5eab35819b53943b5015ff2e317fc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: 15
+  chaseSpeed: 45
   rotationSpeed: 5
   minDistanceToPlayer: 10
 --- !u!114 &8578051002126657792
