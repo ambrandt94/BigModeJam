@@ -41,6 +41,7 @@ public class NPCharacter : MonoBehaviour
 
         if (destructible) {
             destructible.DestroyedByRigidBodyImpactEvent += (body) => {
+                Debug.Log($"Transfering velocity {body.linearVelocity}");
                 ragDoll.TransferVelocity(body, knockbackMultiplier);
             };
             destructible.DestroyedEvent += () => {

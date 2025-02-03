@@ -266,7 +266,8 @@ namespace Pathfinding {
 		/// <summary>Indicates if gravity is used during this frame</summary>
 		protected bool usingGravity { get; set; }
 
-		/// <summary>Delta time used for movement during the last frame</summary>
+		/// <summary>Delta time us
+		/// ed for movement during the last frame</summary>
 		protected float lastDeltaTime;
 
 		/// <summary>Position of the character at the end of the last frame</summary>
