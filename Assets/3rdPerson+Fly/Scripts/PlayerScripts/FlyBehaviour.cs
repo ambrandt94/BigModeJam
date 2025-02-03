@@ -36,13 +36,14 @@ public class FlyBehaviour : GenericBehaviour
     private float burstTimer;
 
     public LayerMask groundLayers; // Assign ground layers in the Inspector
-    public SpellCaster spellcaster; // Assign the spellcaster component in the Inspector
+    public SpellCaster spellCaster; // Assign the spellcaster component in the Inspector
     public BaseSpell groundCollisionSpell;
 
 
     // Start is always called after any Awake functions.
     void Start()
     {
+
         flyBool = Animator.StringToHash("Fly");
         col = this.GetComponent<CapsuleCollider>();
         rb = this.GetComponent<Rigidbody>();
@@ -256,9 +257,9 @@ public class FlyBehaviour : GenericBehaviour
         // 1. Ground Collision and Spell Cast: (This remains separate)
         if (((1 << collision.gameObject.layer) & groundLayers) != 0 && impactSpeed > bounceThresholdSpeed)
         {
-            if (spellcaster != null)
+            if (spellCaster != null)
             {
-                spellcaster.Cast(groundCollisionSpell, transform.position, transform.forward.normalized);
+                spellCaster.Cast(groundCollisionSpell, transform.position, transform.forward.normalized);
                 ToggleFly();
                 return;
             }

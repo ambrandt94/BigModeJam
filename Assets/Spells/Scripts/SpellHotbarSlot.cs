@@ -13,7 +13,11 @@ public class SpellHotbarSlot : MonoBehaviour, IPointerClickHandler
 
 
     private void Start()
-    {        
+    {
+        if (spellCaster == null)
+        {
+            spellCaster = FindObjectOfType<SpellHUD>()?.spellCaster;
+        }
         spellHotbarUI = FindObjectOfType<SpellHotbarUI>(); // Get reference to SpellHotbarUI
         spellMenu = FindObjectOfType<SpellMenuUI>(); // Or better, store a reference
     }

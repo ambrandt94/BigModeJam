@@ -31,6 +31,11 @@ public class SpellMenuUI : MonoBehaviour
 
     void Start()
     {
+        if (spellCaster == null)
+        {
+            spellCaster = FindObjectOfType<SpellHUD>()?.spellCaster;
+        }
+
         spellMenuPanel.SetActive(false); // Initially hide the menu
         PopulateSpellMenu();
         UpdateHotbar();
