@@ -15,15 +15,14 @@ public class DamageEffect : ScriptableObject, ISpellEffect
         {
             // Apply the damage
             destructible.ApplyDamage(new DirectDamage { DamageAmount = damageAmount });
+        }        
+        else
+        {
+             Health health = target.GetComponent<Health>();
+             if (health != null)
+             {
+                 health.TakeDamage(damageAmount);
+             }
         }
-        // Future Health class support?
-        // else
-        // {
-        //     Health health = target.GetComponent<Health>();
-        //     if (health != null)
-        //     {
-        //         health.TakeDamage(damageAmount);
-        //     }
-        // }
     }
 }

@@ -6,6 +6,7 @@ public class SpellHotbarUI : MonoBehaviour
     public SpellCaster spellCaster;
     public Image[] hotbarIcons;
     public Sprite defaultIcon; // Default empty slot icon
+    public Image[] hotbarSlotHighlights; // Array of highlight images for each slot
 
     private void OnEnable()
     {
@@ -17,6 +18,7 @@ public class SpellHotbarUI : MonoBehaviour
         if (spellCaster != null)
         {
             spellCaster.OnHotbarUpdated += UpdateHotbar;
+            spellCaster.OnSpellSelected += OnSpellSelected;
         }
     }
 
@@ -25,6 +27,7 @@ public class SpellHotbarUI : MonoBehaviour
         if (spellCaster != null)
         {
             spellCaster.OnHotbarUpdated -= UpdateHotbar;
+            spellCaster.OnSpellSelected -= OnSpellSelected;
         }
     }
 
@@ -48,6 +51,21 @@ public class SpellHotbarUI : MonoBehaviour
         }
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>()); // ✅ Force Unity UI refresh
+    }
+
+    private void OnSpellSelected(int hotbarIndex)
+    {
+        // Disable all highlights
+        foreach (Image highlight in hotbarSlotHighlights)
+        {
+            highlight.enabled = false;
+        }
+
+        // Enable highlight for the selected slot
+        if (hotbarIndex >= 0 && hotbarIndex < hotbarSlotHighlights.Length)
+        {
+            hotbarSlotHighlights[hotbarIndex].enabled = true;
+        }
     }
 
 }
