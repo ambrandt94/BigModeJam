@@ -5252,6 +5252,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 13bee8b56577d164e89f2d7ce78cdcba, type: 2}
   - {fileID: 11400000, guid: d301ddca43e6365488af95da11e8b4df, type: 2}
   - {fileID: 11400000, guid: 94e262457894d004fbfc7e42bcc2ea90, type: 2}
+  - {fileID: 11400000, guid: d9bd8ab35bd7ddb4280573f7fad9727c, type: 2}
   hotbarIcons: []
   defaultIcon: {fileID: 0}
   selectedSpell: {fileID: 0}

@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: Pillar of Lightning
   manaCost: 0
-  cooldown: 0.25
+  cooldown: 3
   effectPrefab: {fileID: 2020133114420695665, guid: 972d6ec79fa0edf48ba4ccd1ec7e56fb, type: 3}
   effectPrefabRemainsChild: 0
   hasDuration: 0
   icon: {fileID: 21300000, guid: 2bf32494b9fc422478e0bd53e245b11e, type: 3}
-  description: 
+  description: Large area damage
   spellEffects:
   - {fileID: 11400000, guid: b0f12abee6eaa844fb7a2e6a69f43973, type: 2}
-  radius: 3
+  radius: 10
   excludeLayers:
     serializedVersion: 2
     m_Bits: 64

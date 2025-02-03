@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: Fireball
   manaCost: 0
-  cooldown: 0.05
+  cooldown: 1
   effectPrefab: {fileID: 2020133114420695665, guid: e1d406dca1db2de48bf96909a5119135, type: 3}
   effectPrefabRemainsChild: 0
   hasDuration: 0
   icon: {fileID: 21300000, guid: 9dcb88ddd5a8de945a61fe2628e71892, type: 3}
-  description: Shoot a slow moving ball of fire that deals a large amount of damage
+  description: Strong area attack
   spellEffects:
   - {fileID: 11400000, guid: d59c913f00d50ff44a2da827b744dcd8, type: 2}
   - {fileID: 11400000, guid: 05502d74d370eeb498915770310ddfa5, type: 2}

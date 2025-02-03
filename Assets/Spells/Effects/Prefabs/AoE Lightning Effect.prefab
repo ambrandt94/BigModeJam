@@ -53,7 +53,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &794128424598803648
 MonoBehaviour:
@@ -67,12 +67,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07428590cdbabc439d7951b35847ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 3
+  radius: 10
   spellEffects:
   - {fileID: 11400000, guid: 95272a202f8147e4ab4a6c5deb7f33bb, type: 2}
   - {fileID: 11400000, guid: d59c913f00d50ff44a2da827b744dcd8, type: 2}
+  - {fileID: 11400000, guid: ebccf333b105f6446b916455b07bf8b2, type: 2}
   areaEffectPrefab: {fileID: 2020133114420695665, guid: dfcf518f175f320428157962472376e9, type: 3}
   delayBeforeEffect: 0
+  excludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &8940499703295653865
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -81,6 +85,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 795869068191060713}
     m_Modifications:
+    - target: {fileID: 795869068191060713, guid: dfcf518f175f320428157962472376e9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 795869068191060713, guid: dfcf518f175f320428157962472376e9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 795869068191060713, guid: dfcf518f175f320428157962472376e9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 795869068191060713, guid: dfcf518f175f320428157962472376e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -121,10 +137,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 795869068191060713, guid: dfcf518f175f320428157962472376e9, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2020133114420695665, guid: dfcf518f175f320428157962472376e9, type: 3}
       propertyPath: m_Name
       value: Pillar of Lightning Effect
       objectReference: {fileID: 0}
+    - target: {fileID: 5393044782084311694, guid: dfcf518f175f320428157962472376e9, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bc14231efc40c384ea470e5c723215de, type: 2}
     m_RemovedComponents:
     - {fileID: 2029789369095847831, guid: dfcf518f175f320428157962472376e9, type: 3}
     m_RemovedGameObjects: []
@@ -151,12 +175,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07428590cdbabc439d7951b35847ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 3
+  radius: 10
   spellEffects:
   - {fileID: 11400000, guid: 95272a202f8147e4ab4a6c5deb7f33bb, type: 2}
   - {fileID: 11400000, guid: d59c913f00d50ff44a2da827b744dcd8, type: 2}
+  - {fileID: 11400000, guid: d59c913f00d50ff44a2da827b744dcd8, type: 2}
   areaEffectPrefab: {fileID: 2020133114420695665, guid: dfcf518f175f320428157962472376e9, type: 3}
   delayBeforeEffect: 0
+  excludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &8581740687355274496 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 795869068191060713, guid: dfcf518f175f320428157962472376e9, type: 3}

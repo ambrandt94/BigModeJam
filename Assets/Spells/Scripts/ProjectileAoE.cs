@@ -7,6 +7,8 @@ public class ProjectileAoE : MonoBehaviour
     public GameObject areaEffectPrefab; // Visual effect prefab for the AoE
     public float delayBeforeEffect = 0f; // Optional delay before applying the AoE
 
+    public LayerMask excludeLayers;
+
     private void OnTriggerEnter(Collider other)
     {
         // Determine the impact point

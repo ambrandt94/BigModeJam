@@ -19,7 +19,7 @@ MonoBehaviour:
   effectPrefabRemainsChild: 0
   hasDuration: 0
   icon: {fileID: 21300000, guid: d00b94922b2a6e649b59e5d09e4f1e94, type: 3}
-  description: 
+  description: Damage and chill enemies
   spellEffects:
   - {fileID: 11400000, guid: ac4d46bf5bc865e4fa00ae3005545e95, type: 2}
   - {fileID: 11400000, guid: 28f1c95772dcdf34c812c6a225bf7f38, type: 2}

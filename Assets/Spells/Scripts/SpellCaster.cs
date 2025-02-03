@@ -23,8 +23,11 @@ public class SpellCaster : MonoBehaviour
     public event Action<int, float> OnCooldownUpdated; // Event for cooldown updates
     public Action OnHotbarUpdated; // UI event for updating the hotbar
 
+    private SpellMenuUI spellMenuUI; //Bad practice but its here for now
+
     private void Start()
     {
+        spellMenuUI = GameObject.FindFirstObjectByType<SpellMenuUI>();
         cooldownTimers = new float[spells.Length];
 
         // Initialize with the first 4 spells
@@ -53,6 +56,9 @@ public class SpellCaster : MonoBehaviour
                 SelectSpell(i); // Select the spell at this hotbar index
             }
         }
+
+        if (spellMenuUI != null && spellMenuUI.IsMenuOpen())
+            return; 
 
         if (Input.GetMouseButtonDown(0) && currentHotbarIndex != -1 && hotbarSpells[currentHotbarIndex] != null) // Cast on LMB click
         {
@@ -99,6 +105,7 @@ public class SpellCaster : MonoBehaviour
         spell.Cast(this, origin, direction);
 
         cooldownTimers[Array.IndexOf(spells, spell)] = spell.cooldown; // Set cooldown
+        castedSpell = spell;
         OnCooldownUpdated?.Invoke(Array.IndexOf(spells, spell), spell.cooldown);
     }
 
@@ -110,7 +117,7 @@ public class SpellCaster : MonoBehaviour
 
         //spells[spellIndex].Cast(this, origin, direction);
         // End Old casting logic for LMB click
-
+        castedSpell = spell;
         spell.Cast(this, origin, direction);
     }
 

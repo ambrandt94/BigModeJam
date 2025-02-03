@@ -19,6 +19,6 @@ MonoBehaviour:
   effectPrefabRemainsChild: 0
   hasDuration: 0
   icon: {fileID: 21300000, guid: 450fc28ca195a8d42804be841a41cfbf, type: 3}
-  description: 
+  description: Rapidly damage enemies
   spellEffects: []
   speed: 100
