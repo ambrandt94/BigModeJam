@@ -37,6 +37,7 @@ MonoBehaviour:
     - AstarPathfindingProjectExamples
     - CFXRDemo
     - CFXRRuntime
+    - DOTween.Modules
     - Drawing
     - EnhancedScroller_asmdef
     - KinoBloom.Runtime

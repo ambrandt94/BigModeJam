@@ -43,6 +43,7 @@ public class BuildingSegment : MonoBehaviour
     {
         body = GetComponent<Rigidbody>();
         destructible = GetComponent<Destructible>();
-        destructible.DestroyedEvent += () => { if (!isDestroyed && parentGroup != null) parentGroup.OnSegmentDestroyed(this); };
+        if (destructible != null)
+            destructible.DestroyedEvent += () => { if (!isDestroyed && parentGroup != null) parentGroup.OnSegmentDestroyed(this); };
     }
 }

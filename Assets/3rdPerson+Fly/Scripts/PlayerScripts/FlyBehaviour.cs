@@ -43,7 +43,6 @@ public class FlyBehaviour : GenericBehaviour
     // Start is always called after any Awake functions.
     void Start()
     {
-
         flyBool = Animator.StringToHash("Fly");
         col = this.GetComponent<CapsuleCollider>();
         rb = this.GetComponent<Rigidbody>();
@@ -78,7 +77,7 @@ public class FlyBehaviour : GenericBehaviour
         }
     }
 
-    private void ToggleFly()
+    public void ToggleFly()
     {
         fly = !fly;
         behaviourManager.UnlockTempBehaviour(behaviourManager.GetDefaultBehaviour);
@@ -149,6 +148,8 @@ public class FlyBehaviour : GenericBehaviour
         desiredVelocity = direction * speed;
 
         // Existing code for particle effect
+        if (rb == null)
+            return;
         if (rb.linearVelocity.magnitude >= collisionDamageThresholdSpeed)
         {
             speedEffectParticleSystem.Stop();

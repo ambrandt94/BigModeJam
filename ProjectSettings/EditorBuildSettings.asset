@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/DestroyIt/Demos (safe to delete)/Chain Destruction Scene.unity
     guid: 445d4a440920274428fe036e6eef7501
   - enabled: 1
+    path: Assets/BigModeJam/Menu.unity
+    guid: 2b70641707fdfd34582a35dbda74e4d5
+  - enabled: 1
     path: Assets/BigModeJam/Game.unity
     guid: b331a120323ddf946ba0919e4b6ea288
   m_configObjects: {}

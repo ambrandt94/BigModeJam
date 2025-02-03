@@ -10,6 +10,7 @@ TagManager:
   - NPCSpawn
   - TravelPoint
   - HotbarSlot
+  - EnemySpawn
   layers:
   - Default
   - TransparentFX

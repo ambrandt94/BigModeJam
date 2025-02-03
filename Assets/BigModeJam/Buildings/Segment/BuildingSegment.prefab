@@ -139,7 +139,7 @@ MonoBehaviour:
   minDamage: 10
   maxDamage: 100
   minDamageTime: 0
-  ignoreCollisionsUnder: 5
+  ignoreCollisionsUnder: 15
   unparentOnDestroy: []
   disableKinematicOnUparentedChildren: 1
   replaceMaterials: []
@@ -162,7 +162,7 @@ MonoBehaviour:
   shouldDeactivate: 0
   isTerrainTree: 0
   destroyedSound: {fileID: 8300000, guid: c66d702bc67ddac46924da950fd42e7b, type: 3}
-  damagedSound: {fileID: 8300000, guid: c212aa2d646dfe248b7c96b4f0e4cb27, type: 3}
+  damagedSound: {fileID: 8300000, guid: ba823f6acddac494ab11352c0c707daf, type: 3}
   repairedSound: {fileID: 0}
 --- !u!1001 &2911765496879636478
 PrefabInstance:

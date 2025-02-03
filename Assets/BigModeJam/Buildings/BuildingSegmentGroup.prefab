@@ -48,3 +48,4 @@ MonoBehaviour:
   spawnStartTransform: {fileID: 7736865612416654661}
   SegmentHeight: 2.6
   buildingAssetPool: {fileID: 11400000, guid: a7d46fdc24f3b7144aec7cf82218931b, type: 2}
+  createSegmentsOnStart: 1

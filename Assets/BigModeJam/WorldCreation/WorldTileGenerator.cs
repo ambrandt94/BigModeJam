@@ -183,91 +183,17 @@ public class WorldTileGenerator : MonoBehaviour
                     newGenerationCell[index].RecreateCell(newTileList);
                 }
             }
-            //List<WorldCell> newGenCell = new List<WorldCell>(Cells);
-            //for (int y = 0; y < Dimensions; y++) {
-            //    for (int x = 0; x < Dimensions; x++) {
-            //        var index = x + y * Dimensions;
-            //        bool isEmptyTile = false;
-            //        if (Cells[index].Collapsed) {
-            //            isEmptyTile = Cells[index].ContainsEmptyTile;
-            //            if (!isEmptyTile) {
-            //                newGenCell[index] = Cells[index];
-            //            }
-            //        } else {
-            //            List<WorldTile> options = new List<WorldTile>();
-            //            foreach (WorldTile t in TileObjects) {
-            //                options.Add(t);
-            //            }
-
-            //            if (y > 0) {
-            //                WorldCell up = Cells[x + (y - 1) * Dimensions];
-            //                List<WorldTile> validOptions = new List<WorldTile>();
-            //                foreach (WorldTile option in up.TileOptions) {
-            //                    var valOption = Array.FindIndex(TileObjects, obj => obj == option);
-            //                    var valid = TileObjects[valOption].UpNeighbors;
-
-            //                    validOptions = validOptions.Concat(valid).ToList();
-            //                }
-            //                CheckValidity(options, validOptions);
-            //            }
-
-            //            if (x < Dimensions - 1) {
-            //                WorldCell right = Cells[x + 1 + y * Dimensions];
-            //                List<WorldTile> validOptions = new List<WorldTile>();
-
-            //                foreach (WorldTile option in right.TileOptions) {
-            //                    var valOption = Array.FindIndex(TileObjects, obj => obj == option);
-            //                    var valid = TileObjects[valOption].LeftNeighbors;
-
-            //                    validOptions = validOptions.Concat(valid).ToList();
-            //                }
-            //                CheckValidity(options, validOptions);
-            //            }
-
-            //            if (y < Dimensions - 1) {
-            //                WorldCell down = Cells[x + (y + 1) * Dimensions];
-            //                List<WorldTile> validOptions = new List<WorldTile>();
-
-            //                foreach (WorldTile option in down.TileOptions) {
-            //                    var valOption = Array.FindIndex(TileObjects, obj => obj == option);
-            //                    var valid = TileObjects[valOption].DownNeighbors;
-
-            //                    validOptions = validOptions.Concat(valid).ToList();
-            //                }
-            //                CheckValidity(options, validOptions);
-            //            }
-
-            //            if (x > 0) {
-            //                WorldCell left = Cells[x - 1 + y * Dimensions];
-            //                List<WorldTile> validOptions = new List<WorldTile>();
-
-            //                foreach (WorldTile option in left.TileOptions) {
-            //                    var valOption = Array.FindIndex(TileObjects, obj => obj == option);
-            //                    var valid = TileObjects[valOption].RightNeighbors;
-
-            //                    validOptions = validOptions.Concat(valid).ToList();
-            //                }
-            //                CheckValidity(options, validOptions);
-            //            }
-
-            //            WorldTile[] newTileList = new WorldTile[options.Count];
-            //            for (int i = 0; i < options.Count; i++) {
-            //                newTileList[i] = options[i];
-            //            }
-            //            newGenCell[index].RecreateCell(newTileList);
-            //        }
-            //        if (Cells[index].Collapsed && Cells[index].ContainsEmptyTile) {
-            //            newGenCell[index].RecreateCell(TileObjects);
-            //        }
-            //    }
         }
 
         Cells = newGenerationCell;
         iterations++;
 
         if (iterations < Dimensions * Dimensions) {
+            MenuManager.Instance.SetLoadAmount((float)iterations/((float)(Dimensions * Dimensions)));
             StartCoroutine(CheckEntropyRoutine());
         } else {
+            MenuManager.Instance.ToggleCover(false);
+            MenuManager.Instance.ToggleLoading(false);
             OnFinished?.Invoke();
         }
     }

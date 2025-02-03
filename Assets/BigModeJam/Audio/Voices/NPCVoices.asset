@@ -12,9 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39aac596adf57dd41a3a7e33da23157c, type: 3}
   m_Name: NPCVoices
   m_EditorClassIdentifier: 
-  PoolName: 
+  PoolName: NPCVoice
   Groups:
-  - GroupName: Male
-    assets: []
+  - GroupName: Pain
+    assets:
+    - {fileID: 8300000, guid: 3dad3919f5532aa4bad540e7dd77ae34, type: 3}
+    - {fileID: 8300000, guid: a5a3d8a2ab5b1964aa6123de3598d4af, type: 3}
+    - {fileID: 8300000, guid: d916ff0ee5668e04f954f9c3def8a237, type: 3}
+    - {fileID: 8300000, guid: 6289446a21869b043ac4aa51ef420e85, type: 3}
+    - {fileID: 8300000, guid: 1091748c67f43fa4e8da1de83f10f7a8, type: 3}
+    - {fileID: 8300000, guid: 92b1c8deffea86549bbf47945c44c70f, type: 3}
+    - {fileID: 8300000, guid: d4d6c70be8b0f3048891c82784284090, type: 3}
+    - {fileID: 8300000, guid: 16fbbcad9caac864dbe386258c730b87, type: 3}
+    - {fileID: 8300000, guid: 535d257ff56664e42a2b9b5f895ab3c2, type: 3}
+    - {fileID: 8300000, guid: 296e3a4131cc304499c59db9c2b649b6, type: 3}
+    - {fileID: 8300000, guid: db8412cc9b13e8942aa84c159359d82b, type: 3}
+    - {fileID: 8300000, guid: d5aa647f7c8fab6408b9fc9e0102f5a8, type: 3}
   - GroupName: Female
     assets: []

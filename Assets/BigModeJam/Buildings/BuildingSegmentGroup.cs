@@ -13,6 +13,8 @@ public class BuildingSegmentGroup : MonoBehaviour
     private float SegmentHeight;
     [SerializeField]
     GenericAssetPool buildingAssetPool;
+    [SerializeField]
+    private bool createSegmentsOnStart;
 
     private List<BuildingSegment> segments;
 
@@ -35,7 +37,7 @@ public class BuildingSegmentGroup : MonoBehaviour
                 Debug.Log($"Hit segment {i}");
                 hitSegment = true;
             }
-            if (hitSegment) { 
+            if (hitSegment) {
                 Debug.Log($"Turn on Physics on segment {i}");
                 segments[i].TriggerDestruction();
                 //segments[i].ToggleConstraints(false);
@@ -51,19 +53,20 @@ public class BuildingSegmentGroup : MonoBehaviour
         Vector3 spawnPos = Vector3.zero;
         for (int i = 0; i < num; i++) {
             BuildingSegment segment = Instantiate(segmentPrefab, spawnPos, Quaternion.identity).GetComponent<BuildingSegment>();
-            segment.transform.SetParent(spawnStartTransform,true);
+            segment.transform.SetParent(spawnStartTransform, true);
             segment.transform.localPosition = spawnPos;
             segment.transform.localScale = Vector3.one;
             segment.Initialize(this);
             segments.Add(segment);
             spawnPos.y += SegmentHeight;
         }
-        SetBaseBuildingTexture(buildingAssetPool.GetRandom("base") as Texture);
     }
 
     private void Awake()
     {
         segments = new List<BuildingSegment>(GetComponentsInChildren<BuildingSegment>());
-        InitializeSegments();
+        if (createSegmentsOnStart)
+            InitializeSegments();
+        SetBaseBuildingTexture(buildingAssetPool.GetRandom("base") as Texture);
     }
 }

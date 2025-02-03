@@ -8,7 +8,10 @@ public class NPCharacter : MonoBehaviour
 {
     [SerializeField]
     private float knockbackMultiplier;
+    [SerializeField]
+    private GenericAssetPool voicePool;
 
+    private AudioSource audioSource;
     private CharacterPather pather;
     private Destructible destructible;
     private RagdollMaker ragDoll;
@@ -26,17 +29,21 @@ public class NPCharacter : MonoBehaviour
     {
         transform.GetChild(0).transform.parent = null;
         ragDoll.ToggleActive(true);
+        if (voicePool != null) {
+            AudioClip clip = (AudioClip)voicePool.GetRandom("Pain");
+            audioSource.PlayOneShot(clip);
+        }
     }
 
     private void Start()
     {
-        
         pather = GetComponent<CharacterPather>();
-        GameObject obj = Instantiate(NPCManager.Instance.GetCharacterPrefab("modern"),transform);
-        obj.transform.localPosition= Vector3.zero;
+        GameObject obj = Instantiate(NPCManager.Instance.GetCharacterPrefab("modern"), transform);
+        audioSource = obj.GetOrAddComponent<AudioSource>();
+        obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.identity;
         SetupRagdoll();
-        
+
         destructible = GetComponentInChildren<Destructible>();
 
         if (destructible) {
