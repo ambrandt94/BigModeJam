@@ -15,12 +15,12 @@ public class SpellCaster : MonoBehaviour
 
     private BaseSpell castedSpell;
 
-    private int currentSpellIndex;
+    private int currentSpellIndex = 0; // Initialize to -1 to indicate no spell selected initially
+    private int currentHotbarIndex = 0; // Index of the selected hotbar slot
     private float[] cooldownTimers;
 
-    public event Action<int> OnSpellSelected; // Event for spell selection
+    public event Action<int> OnSpellSelected; // Event for spell selection (now passes hotbar index)
     public event Action<int, float> OnCooldownUpdated; // Event for cooldown updates
-
     public Action OnHotbarUpdated; // UI event for updating the hotbar
 
     private void Start()
@@ -31,10 +31,8 @@ public class SpellCaster : MonoBehaviour
         for (int i = 0; i < hotbarSpells?.Length; i++)
         {
             if (i < spells.Length) hotbarSpells[i] = spells[i];
-            OnHotbarUpdated.Invoke();
         }
-
-      
+        OnHotbarUpdated?.Invoke();     
 
     }
 
@@ -47,21 +45,28 @@ public class SpellCaster : MonoBehaviour
             return;
 
         HandleCooldowns();
-      
-            for (int i = 0; i < hotbarSpells.Length; i++)
+
+        for (int i = 0; i < hotbarSpells.Length; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {
-                if (Input.GetKeyDown(KeyCode.Alpha1 + i) && hotbarSpells[i] != null)
-                {
-                    Cast(i, spellOrigin.position, transform.forward);
-                }
+                SelectSpell(i); // Select the spell at this hotbar index
             }
-        
+        }
 
-        //if (Input.mouseScrollDelta.y != 0) {
-        //    CycleSpells((int)Input.mouseScrollDelta.y);
-        //}
+        if (Input.GetMouseButtonDown(0) && currentHotbarIndex != -1 && hotbarSpells[currentHotbarIndex] != null) // Cast on LMB click
+        {
+            Cast(currentHotbarIndex, spellOrigin.position, Direction);
+        }
 
 
+    }
+
+    private void SelectSpell(int hotbarIndex)
+    {
+        currentHotbarIndex = hotbarIndex;
+        OnSpellSelected?.Invoke(hotbarIndex); // Invoke the event with the hotbar index
+        Debug.Log("Selected spell at hotbar index: " + hotbarIndex);
     }
 
     private void HandleCooldowns()
@@ -85,10 +90,19 @@ public class SpellCaster : MonoBehaviour
         // End Old casting logic for LMB click
 
         if (hotbarIndex < 0 || hotbarIndex >= hotbarSpells.Length || hotbarSpells[hotbarIndex] == null) return;
-        hotbarSpells[hotbarIndex].Cast(this, origin, direction);
+
+        BaseSpell spell = hotbarSpells[hotbarIndex];
+
+        if (mana < spell.manaCost || cooldownTimers[Array.IndexOf(spells, spell)] > 0) return; // Mana and cooldown check
+
+        mana -= spell.manaCost;
+        spell.Cast(this, origin, direction);
+
+        cooldownTimers[Array.IndexOf(spells, spell)] = spell.cooldown; // Set cooldown
+        OnCooldownUpdated?.Invoke(Array.IndexOf(spells, spell), spell.cooldown);
     }
 
-    public void Cast(BaseSpell spell, Vector3 origin, Vector3 direction)
+        public void Cast(BaseSpell spell, Vector3 origin, Vector3 direction)
     {
         // Old casting logic for LMB click
         //if (spells == null || spells.Length == 0) return;
