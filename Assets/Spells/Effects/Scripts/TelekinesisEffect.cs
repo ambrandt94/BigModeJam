@@ -10,10 +10,12 @@ public class TelekinesisEffect : ScriptableObject, ISpellEffect
     public float followSmoothness = 10f; // How smoothly the object follows trackingTransform
     public float forgivenessTime = 0.3f; // Time before dropping an object when the raycast is lost
 
-    private Transform telekinesisTarget;
+    public Transform telekinesisTarget;
     private Rigidbody targetRigidbody;
     private Transform trackingTransform;
     private SpellCaster caster;
+
+    private bool isTelekinetic = false; // Flag to track if telekinesis is active
 
     public void SetCaster(SpellCaster _caster)
     {
@@ -42,13 +44,15 @@ public class TelekinesisEffect : ScriptableObject, ISpellEffect
             trackingTransform.position = hitPoint;
             initialDistance = Vector3.Distance(caster.transform.position, hitPoint);
 
-            // ✅ Debug Sphere to visualize trackingTransform
-            GameObject debugSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            debugSphere.transform.localScale = Vector3.one * 0.2f;
-            debugSphere.transform.position = trackingTransform.position;
-            debugSphere.name = "Debug_TelekinesisTracker";
-            Object.Destroy(debugSphere.GetComponent<Collider>());
-            debugSphere.transform.SetParent(trackingTransform, true);
+            isTelekinetic = true; // Set the flag
+
+            //// ✅ Debug Sphere to visualize trackingTransform
+            //GameObject debugSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            //debugSphere.transform.localScale = Vector3.one * 0.2f;
+            //debugSphere.transform.position = trackingTransform.position;
+            //debugSphere.name = "Debug_TelekinesisTracker";
+            //Object.Destroy(debugSphere.GetComponent<Collider>());
+            //debugSphere.transform.SetParent(trackingTransform, true);
         }
         else
         {
@@ -58,7 +62,7 @@ public class TelekinesisEffect : ScriptableObject, ISpellEffect
 
     public void UpdateEffect(bool hasValidRaycast)
     {
-        if (telekinesisTarget == null || caster == null) return;
+        if (!isTelekinetic || telekinesisTarget == null || caster == null || trackingTransform == null) return; // Check the flag
 
         if (!hasValidRaycast && Time.time - lastHitTime > forgivenessTime)
         {
@@ -110,11 +114,12 @@ public class TelekinesisEffect : ScriptableObject, ISpellEffect
             targetRigidbody.isKinematic = false;
         }
 
-        if(trackingTransform != null)
+        if (trackingTransform != null)
             Destroy(trackingTransform.gameObject);
 
         telekinesisTarget = null;
         targetRigidbody = null;
+        isTelekinetic = false; // Reset the flag
     }
 
     // Debugging Helpers

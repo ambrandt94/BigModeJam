@@ -18,10 +18,12 @@ MonoBehaviour:
   effectPrefab: {fileID: 0}
   effectPrefabRemainsChild: 0
   hasDuration: 0
+  icon: {fileID: 0}
+  description: 
   spellEffects:
   - {fileID: 11400000, guid: 3d37c2eb8a6e78142ae6e9bf4441c9ba, type: 2}
   - {fileID: 11400000, guid: 58432bd912d7aef4790fc8d2f3ad6043, type: 2}
-  radius: 3
+  radius: 0.1
   canHitSelf: 1
   canHitOthers: 1
   originOffSet: {x: 0, y: 0, z: 0}

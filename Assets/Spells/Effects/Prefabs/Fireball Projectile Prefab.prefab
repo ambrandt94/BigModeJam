@@ -103,7 +103,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 4
+    m_Bits: 68
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -156,6 +156,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d59c913f00d50ff44a2da827b744dcd8, type: 2}
   areaEffectPrefab: {fileID: 1279125013800246, guid: d25631b69b059d64385ac05f70824713, type: 3}
   delayBeforeEffect: 0
+  excludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &299210113464207335
 PrefabInstance:
   m_ObjectHideFlags: 0

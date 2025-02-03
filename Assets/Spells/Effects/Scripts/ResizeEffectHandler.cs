@@ -12,6 +12,11 @@ public class ResizeEffectHandler : MonoBehaviour
     {
         Vector3 initialScale = target.localScale;
         Vector3 targetScale = initialScale + totalSizeChange;
+       
+            targetScale.x = Mathf.Max(targetScale.x, 0.1f);
+            targetScale.y = Mathf.Max(targetScale.y, 0.1f);
+            targetScale.z = Mathf.Max(targetScale.z, 0.1f);
+
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)

@@ -15,12 +15,16 @@ public class StunComponent : MonoBehaviour
     private SpellCaster spellCaster;
     private Rigidbody rb;
 
+    private FlyingEnemy flyingEnemy;
+
     private void Start()
     {
         moveBehaviour = GetComponent<MoveBehaviour>();
         flyBehaviour = GetComponent<FlyBehaviour>();
         spellCaster = GetComponent<SpellCaster>();
         rb = GetComponent<Rigidbody>();
+
+        flyingEnemy = GetComponent<FlyingEnemy>();
     }
 
     public void Stun(float duration)
@@ -45,6 +49,8 @@ public class StunComponent : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
             rb.constraints = RigidbodyConstraints.FreezeAll; //Lock rotation and position
         }
+
+        if(flyingEnemy != null) flyingEnemy.enabled = false;
     }
 
     private void Update()
@@ -65,6 +71,8 @@ public class StunComponent : MonoBehaviour
                 {
                     rb.constraints = RigidbodyConstraints.None; //Unlock rotation and position
                 }
+
+                if (flyingEnemy != null) flyingEnemy.enabled = true;
             }
         }
     }
