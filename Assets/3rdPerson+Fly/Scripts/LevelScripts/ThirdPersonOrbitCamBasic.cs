@@ -171,7 +171,7 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
         if (Physics.SphereCast(checkPos, 0.2f, direction, out RaycastHit hit, direction.magnitude))
         {
             // ... if it is not the player...
-            if (hit.transform != player && !hit.transform.GetComponent<Collider>().isTrigger)
+            if (hit.transform != player && !hit.transform.GetComponent<Collider>() != null && !hit.transform.GetComponent<Collider>().isTrigger)
             {
                 // This position isn't appropriate.
                 return false;
@@ -189,7 +189,7 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
         Vector3 direction = checkPos - origin;
         if (Physics.SphereCast(origin, 0.2f, direction, out RaycastHit hit, direction.magnitude))
         {
-            if (hit.transform != player && hit.transform != transform && !hit.transform.GetComponent<Collider>().isTrigger)
+            if (hit.transform != player && hit.transform != transform && !hit.transform.GetComponent<Collider>() != null && !hit.transform.GetComponent<Collider>().isTrigger)
             {
                 return false;
             }
