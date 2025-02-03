@@ -9,6 +9,11 @@ public class SpellHotbarUI : MonoBehaviour
 
     private void OnEnable()
     {
+        if(spellCaster == null)
+        {
+            spellCaster = FindObjectOfType<SpellHUD>()?.spellCaster;
+        }
+
         if (spellCaster != null)
         {
             spellCaster.OnHotbarUpdated += UpdateHotbar;
