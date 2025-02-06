@@ -2641,6 +2641,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e92a045f46e66f346916ca8ad521dcf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &62916407 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7805280071016823719, guid: 52fb75a2dca92324e96b16d1daf213bd, type: 3}
+  m_PrefabInstance: {fileID: 62916405}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536484820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52012625fd20ab9449f8797352f33656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &63555999
 GameObject:
   m_ObjectHideFlags: 0
@@ -44898,7 +44909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 0
+  m_ShowMaskGraphic: 1
 --- !u!114 &1287618048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44912,7 +44923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.29411766, g: 0.03529412, b: 0.03529412, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -44928,7 +44939,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2
+  m_PixelsPerUnitMultiplier: 3
 --- !u!222 &1287618049
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -48472,7 +48483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2924528, g: 0.034487356, b: 0.034487356, a: 1}
+  m_Color: {r: 0.8113208, g: 0.7491263, b: 0.14159843, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -48488,7 +48499,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2
+  m_PixelsPerUnitMultiplier: 3
 --- !u!222 &1413779100
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -62571,7 +62582,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1809481110
 MonoBehaviour:
@@ -62602,7 +62613,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2
+  m_PixelsPerUnitMultiplier: 3
 --- !u!222 &1809481111
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -62903,8 +62914,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1816817497}
   - component: {fileID: 1816817498}
+  - component: {fileID: 1816817499}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: HealthSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62929,7 +62941,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 16, y: 16}
-  m_SizeDelta: {x: 480, y: 40}
+  m_SizeDelta: {x: 480, y: 24}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1816817498
 MonoBehaviour:
@@ -62982,6 +62994,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1816817499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816817496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba0b9492151c464581c16c52a4f8312, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceObject: {fileID: 62916407}
 --- !u!1 &1822915122
 GameObject:
   m_ObjectHideFlags: 0

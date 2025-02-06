@@ -1,28 +1,32 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+
+public class Health : MonoBehaviour, IHaveSliderData
 {
     public float maxHealth = 100f;
+    [SerializeField,ReadOnly]
     private float currentHealth;
 
-    public event Action<float> OnHealthUpdated; // Event for health updates
+    public Action<float> OnSliderDataUpdate { get; set; }
+
     public event Action OnDeath; // Event for death
 
-    public float CurrentHealth
-    {
+    public float CurrentHealth {
         get => currentHealth;
-        private set
-        {
+        private set {
             currentHealth = Mathf.Clamp(value, 0, maxHealth); // Keep health within bounds
-            OnHealthUpdated?.Invoke(currentHealth); // Trigger the health update event
+            OnSliderDataUpdate?.Invoke(currentHealth); // Trigger the health update event
 
-            if (currentHealth <= 0)
-            {
+            if (currentHealth <= 0) {
                 Die();
             }
         }
     }
+
+    public float CurrentAmount { get => currentHealth; set => currentHealth = value; }
+    public float MaxAmount { get => maxHealth; set => maxHealth = value; }
 
     void Start()
     {
@@ -47,5 +51,17 @@ public class Health : MonoBehaviour
         Debug.Log(gameObject.name + " has died!");
         // Handle death (e.g., destroy the object, respawn, etc.)
         //Destroy(gameObject); // Example: Destroys the gameobject on death.
+    }
+
+    [ButtonGroup("Test"), Button("---")]
+    private void LoseHealth()
+    {
+        CurrentHealth -= maxHealth * .1f;
+    }
+
+    [ButtonGroup("Test"), Button("+++")]
+    private void GainHealth()
+    { 
+        CurrentHealth += maxHealth * .1f;
     }
 }

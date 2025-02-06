@@ -40,7 +40,6 @@ public class PathManager : MonoBehaviour
             smoothPath.AddRange(turnArc);
         }
 
-        Debug.Log($"Generated AI Path with {smoothPath.Count} points");
         return smoothPath;
     }
 

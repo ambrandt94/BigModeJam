@@ -52,6 +52,16 @@ public class CharacterAnimator : MonoBehaviour
         }
     }
 
+    public void SetTrigger(string id)
+    {
+        if (Bools == null)
+            return;
+        foreach (var anim in Triggers) {
+            if (anim.Id == id)
+                Animator.SetTrigger(anim.Id);
+        }
+    }
+
     public void SetXYInput(float h, float f)
     {
         horizontal = h;

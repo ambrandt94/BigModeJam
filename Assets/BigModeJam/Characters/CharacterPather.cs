@@ -70,13 +70,13 @@ namespace BigModeJam
                 if (ai.reachedDestination) {
                     animator.IsWalking = false;
                     ai.isStopped = true;
-                    Debug.Log($"{gameObject.name} has reached destination");
+                    //Debug.Log($"{gameObject.name} has reached destination");
                     pathing = false;
                     GoToTarget(NPCManager.Instance.GetRandomTravelPoint());
                 } else if (ai.reachedEndOfPath) {
                     animator.IsWalking = false;
                     ai.isStopped = true;
-                    Debug.Log($"{gameObject.name} has reached end of path");
+                    //Debug.Log($"{gameObject.name} has reached end of path");
                     pathing = false;
                     GoToTarget(NPCManager.Instance.GetRandomTravelPoint());
                 }

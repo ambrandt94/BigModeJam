@@ -14,18 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   References:
   - type: 1
-    actualReference: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
-    cachedDrawData:
-      Name: SampleScene
-      Icon: {fileID: 985423054452513129, guid: 0000000000000000d000000000000000, type: 0}
-      SceneData:
-        IsScene: 1
-        Scene: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
-    cachedTypes:
-    - SceneAsset
-    sceneGUID: 
-    localIdentifier: 0
-  - type: 1
     actualReference: {fileID: 102900000, guid: 63092604c68e1f945adc01268df2b93a, type: 3}
     cachedDrawData:
       Name: Overview
@@ -132,6 +120,18 @@ MonoBehaviour:
       SceneData:
         IsScene: 1
         Scene: {fileID: 102900000, guid: 2b70641707fdfd34582a35dbda74e4d5, type: 3}
+    cachedTypes:
+    - SceneAsset
+    sceneGUID: 
+    localIdentifier: 0
+  - type: 1
+    actualReference: {fileID: 102900000, guid: b48aa64ce6bf3a84cb6ca032f74a0d20, type: 3}
+    cachedDrawData:
+      Name: SampleScene
+      Icon: {fileID: 985423054452513129, guid: 0000000000000000d000000000000000, type: 0}
+      SceneData:
+        IsScene: 1
+        Scene: {fileID: 102900000, guid: b48aa64ce6bf3a84cb6ca032f74a0d20, type: 3}
     cachedTypes:
     - SceneAsset
     sceneGUID: 

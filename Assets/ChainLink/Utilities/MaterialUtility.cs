@@ -20,7 +20,7 @@ namespace ChainLink.Core
         }
 
         public string Id;
-        
+
         [SerializeField, TitleGroup("Colors")]
         private Color color;
         [SerializeField, TitleGroup("Colors")]
@@ -33,6 +33,8 @@ namespace ChainLink.Core
         private Renderer renderer;
         [SerializeField]
         private Texture overrideTexture;
+        [SerializeField]
+        private bool applyOnStart;
 
         private MaterialPropertyBlock _block;
 
@@ -44,11 +46,11 @@ namespace ChainLink.Core
             if (parent == null) {
                 foreach (MaterialUtility u in FindObjectsByType(typeof(MaterialUtility), FindObjectsInactive.Include, FindObjectsSortMode.None))
                     utilities.Add(u);
-            } else { 
-            foreach(MaterialUtility u in parent.GetComponentsInChildren<MaterialUtility>(true))
+            } else {
+                foreach (MaterialUtility u in parent.GetComponentsInChildren<MaterialUtility>(true))
                     utilities.Add(u);
             }
-            
+
             return utilities;
         }
 
@@ -85,7 +87,7 @@ namespace ChainLink.Core
             renderer.SetPropertyBlock(Block);
         }
 
-        private void OnValidate()
+        private void Apply()
         {
             if (renderer != null) {
                 SetColor(color);
@@ -97,10 +99,18 @@ namespace ChainLink.Core
             }
         }
 
+        private void OnValidate()
+        {
+            Apply();
+        }
+
         private void Awake()
         {
             if (renderer == null)
                 renderer = GetComponentInChildren<Renderer>();
+            if (applyOnStart) {
+                Apply();
+            }
         }
     }
 }

@@ -38,7 +38,6 @@ public class BuildingSegmentGroup : MonoBehaviour
                 hitSegment = true;
             }
             if (hitSegment) {
-                Debug.Log($"Turn on Physics on segment {i}");
                 segments[i].TriggerDestruction();
                 //segments[i].ToggleConstraints(false);
             }

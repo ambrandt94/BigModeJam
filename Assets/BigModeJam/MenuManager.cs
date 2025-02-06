@@ -23,7 +23,6 @@ public class MenuManager : Singleton<MenuManager>
 
     public void SetLoadAmount(float fill)
     {
-        Debug.Log("Attempting to set load amount");
         if (loadingSlider == null)
             return;
         loadingSlider.value = fill;

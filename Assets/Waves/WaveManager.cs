@@ -71,8 +71,9 @@ public class WaveManager : MonoBehaviour
             foreach (EnemySpawnInfo enemyInfo in subWave.enemyTypes) {
                 for (int i = 0; i < subWave.numberOfEnemies; i++) //Loop through all enemies to be spawned in this subwave
                 {
-                    Vector3 position = subWave.spawnPoint.position + (UnityEngine.Random.insideUnitSphere * 3);
+                    Vector3 position = subWave.spawnPoint.position + (UnityEngine.Random.insideUnitSphere * 2);
                     GameObject enemyInstance = Instantiate(enemyInfo.enemyPrefab, position, subWave.spawnPoint.rotation); //Instantiate the enemy
+                    Debug.Log($"Spawning enemy type: {enemyInfo.enemyPrefab.name}", enemyInstance.gameObject);
                     currentWave.IncrementEnemiesAlive(1); //Increment enemies alive in THIS wave
                     SmoothPatrolBehavior smoothPatrolBehavior = enemyInstance.GetComponent<SmoothPatrolBehavior>();
                     smoothPatrolBehavior?.SetPathManager(subWave.pathManager);
