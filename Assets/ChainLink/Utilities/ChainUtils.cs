@@ -1,7 +1,10 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace ChainLink.Core
 {
@@ -27,7 +30,7 @@ namespace ChainLink.Core
         public static T GetOrAddComponent<T>(this GameObject target) where T : UnityEngine.Component
         {
             T instance = target.GetComponent<T>();
-            if(instance == null)
+            if (instance == null)
                 instance = target.AddComponent<T>();
             return instance;
         }
@@ -47,6 +50,60 @@ namespace ChainLink.Core
                 PrefabUtility.SavePrefabAsset(obj);
             }
 #endif
+        }
+    }
+
+    public class RoutineRunner : Singleton<RoutineRunner>
+    {
+        private Dictionary<string, Coroutine> routineTable;
+
+        public void StartRoutine(IEnumerator routine)
+        {
+            StartCoroutine(routine);
+        }
+
+        public void InstantiateAfterDelay(GameObject prefab, float delay, Vector3 pos, Quaternion rot, Transform parent, Action<GameObject> afterSpawn)
+        {
+            Debug.Log("Queue Instantiate...");
+            Action action = () => {
+                if (parent == null) {
+                    Debug.Log("SPAWN");
+                    GameObject obj = Instantiate(prefab, pos, rot);
+                    afterSpawn?.Invoke(obj);
+                } else {
+                    Debug.Log("SPAWN");
+                    GameObject obj = Instantiate(prefab, pos, rot, parent);
+                    afterSpawn?.Invoke(obj);
+                }
+            };
+            DoAfterDelay(action, delay);
+        }
+
+        public void InstantiateAfterDelay(GameObject prefab, float delay, Transform parent, bool parentToParent, Action<GameObject> afterSpawn)
+        {
+            Debug.Log("Queue Instantiate...");
+            Action action = () => {
+                if (parentToParent) {
+                    GameObject obj = Instantiate(prefab, parent);
+                    afterSpawn?.Invoke(obj);
+                } else {
+                    GameObject obj = Instantiate(prefab, parent.position, parent.rotation);
+                    afterSpawn?.Invoke(obj);
+                }
+            };
+            DoAfterDelay(action, delay);
+        }
+
+
+        public void DoAfterDelay(Action action, float delay)
+        {
+            StartCoroutine(DoAfterDelayRoutine(action, delay));
+        }
+
+        private IEnumerator DoAfterDelayRoutine(Action action, float delay)
+        {
+            yield return new WaitForSecondsRealtime(delay);
+            action?.Invoke();
         }
     }
 }
